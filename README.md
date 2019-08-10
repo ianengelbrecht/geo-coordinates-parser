@@ -13,7 +13,9 @@ coords.decimalLongitude; // -79.948862 ✓
 coords.verbatimLatitude; // '40° 26.7717' ✓
 coords.verbatimLongitude; // '-79° 56.93172' ✓
 ```
-The returned object includes properties verbatimCoordinates, verbatimLatitude, verbatimLongitude, decimalLatitude, decimalLatitude, and decimalCoordinates
+The returned object includes properties verbatimCoordinates, verbatimLatitude, verbatimLongitude, decimalLatitude, decimalLatitude, and decimalCoordinates.
+
+**Please add coordinate formats that throw an error in the Issues.**
 
 ### Supported formats
 
