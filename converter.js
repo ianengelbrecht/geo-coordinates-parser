@@ -239,7 +239,8 @@ module.exports = function(coordsString) {
       verbatimLongitude: verbatimLng,
       decimalLatitude:  Number(ddLat),
       decimalLongitude: Number(ddLng),
-      decimalCoordinates: `${ddLat},${ddLng}`
+      decimalCoordinates: `${ddLat},${ddLng}`,
+      closeEnough: coordsCloseEnough
     }
   }
   else {
@@ -292,8 +293,31 @@ function checkMatch(match) { //test if the matched groups arrays are 'balanced'.
   return result;
 }
 
+//functions for coordinate validation
+
+//as decimal arithmetic is not straightforward, we approximate
+function decimalsCloseEnough(dec1, dec2){
+  var diff = Math.abs(dec1 - dec2)
+  return diff <= 0.0000011
+}
+
+function coordsCloseEnough(coordsToTest) {
+  if (coordsToTest.includes(',')){
+    var coords = coordsToTest.split(',')
+    if(Number(coords[0]) == NaN || Number(coords[1]) == NaN) {
+      throw new Error("coords are not valid decimals")
+    }
+    else {
+      return decimalsCloseEnough(this.decimalLatitude, Number(coords[0])) && decimalsCloseEnough(this.decimalLongitude, coords[1]) //this here will be the converted coordinates object
+    }
+  }
+  else {
+    throw new Error("coords being tested must be separated by a comma")
+  }
+}
 
 
+//Coordinates pattern matching regex
 var dd_re = /(NORTH|SOUTH|[NS])?[\s]*([+-]?[0-8]?[0-9](?:[\.,]\d{3,}))([•º°]?)[\s]*(NORTH|SOUTH|[NS])?[\s]*[,/]?[\s]*(EAST|WEST|[EW])?[\s]*([+-]?[0-1]?[0-9]?[0-9](?:[\.,]\d{3,}))([•º°]?)[\s]*(EAST|WEST|[EW])?/i;
 //degrees minutes seconds with '.' as separator - gives array with 15 values
 var dms_periods = /(NORTH|SOUTH|[NS])?[\ \t]*([+-]?[0-8]?[0-9])[\ \t]*(\.)[\ \t]*([0-5]?[0-9])[\ \t]*(\.)?[\ \t]*((?:[0-5]?[0-9])(?:\.\d{1,3})?)?(NORTH|SOUTH|[NS])?(?:[\ \t]*[,/][\ \t]*|[\ \t]*)(EAST|WEST|[EW])?[\ \t]*([+-]?[0-1]?[0-9]?[0-9])[\ \t]*(\.)[\ \t]*([0-5]?[0-9])[\ \t]*(\.)?[\ \t]*((?:[0-5]?[0-9])(?:\.\d{1,3})?)?(EAST|WEST|[EW])?/i;

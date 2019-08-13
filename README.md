@@ -1,17 +1,17 @@
 # Geo Coordinate Parser
 
-A Javascript function for reading a variety of coordinate formats and converting to decimal numbers. Builds on other efforts for convenience by returning the verbatim coordinates and the decimal coordinates all in one object.
+A Javascript function for reading a variety of coordinate formats and converting to decimal numbers. Builds on other efforts for convenience by returning the verbatim coordinates and the decimal coordinates all in one object. Also includes a function to test existing decimal coordinates against those from the converter. 
 
 ### Usage
 ```js
 parseCoordsString = require('geo-coordinate-parser');
 
-let coords = parseCoordsString('40° 26.7717, -79° 56.93172');
+let converted = parseCoordsString('40° 26.7717, -79° 56.93172');
 
-coords.decimalLatitude; // 40.446195 ✓
-coords.decimalLongitude; // -79.948862 ✓
-coords.verbatimLatitude; // '40° 26.7717' ✓
-coords.verbatimLongitude; // '-79° 56.93172' ✓
+converted.decimalLatitude; // 40.446195 ✓
+converted.decimalLongitude; // -79.948862 ✓
+converted.verbatimLatitude; // '40° 26.7717' ✓
+converted.verbatimLongitude; // '-79° 56.93172' ✓
 ```
 The returned object includes properties verbatimCoordinates, verbatimLatitude, verbatimLongitude, decimalLatitude, decimalLatitude, and decimalCoordinates.
 
@@ -23,6 +23,13 @@ All formats (except the 'exotic formats') covered by [npm coordinate-parser](htt
 - -23.3245° S / 28.2344° E
 - 27deg 15min 45.2sec S 18deg 32min 53.7sec E
 - 18.24S 22.45E // read as degrees and minutes
+
+### Validating existing decimal coordinates
+Sometimes we may want to validate existing decimal coordinates against those returned from the converter to find errors. Because we're working with decimal numbers we must settle for values that are close enough (in this case the same up to six decimal places).
+
+```js
+converted.closeEnough(yourDecimalCoordinatesToTest) //must be a string separated by ,
+```
 
 ### License
 MIT Licence

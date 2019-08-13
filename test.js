@@ -8,9 +8,11 @@ testFormats.some(t => {  //.some so we can break
 
   try {
     var converted = convert(t.verbatimCoordinates)
+
+    var testDecimalCoordsString = `${t.decimalLatitude},${t.decimalLongitude}`
     
     //check the calculation is correct
-    if(!decimalsCloseEnough(converted.decimalLatitude, t.decimalLatitude) || !decimalsCloseEnough(converted.decimalLongitude, t.decimalLongitude)) {
+    if(!converted.closeEnough(testDecimalCoordsString)) {
       console.log("Error in decimal conversion")
       console.log(t.verbatimCoordinates)
       console.log(t.decimalLatitude)
@@ -45,6 +47,8 @@ testFormats.some(t => {  //.some so we can break
 if (allPassed) {
   console.log("all formats successfully converted")
 }
+
+
 
 
 //as decimal arithmetic is not straightforward, we approximate
