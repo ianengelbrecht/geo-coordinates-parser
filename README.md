@@ -15,7 +15,11 @@ converted.verbatimLongitude; // '-79° 56.93172' ✓
 ```
 The returned object includes properties verbatimCoordinates, verbatimLatitude, verbatimLongitude, decimalLatitude, decimalLatitude, and decimalCoordinates.
 
-**Please add coordinate formats that throw an error in the Issues.**
+Sometimes we may want to validate existing decimal coordinates against those returned from the converter to find errors. Because we're working with decimal numbers we must settle for values that are close enough (in this case the same up to six decimal places).
+
+```js
+converted.closeEnough(yourDecimalCoordinatesToTest) //must be a string separated by ,
+```
 
 ### Supported formats
 
@@ -24,12 +28,7 @@ All formats (except the 'exotic formats') covered by [npm coordinate-parser](htt
 - 27deg 15min 45.2sec S 18deg 32min 53.7sec E
 - 18.24S 22.45E // read as degrees and minutes
 
-### Validating existing decimal coordinates
-Sometimes we may want to validate existing decimal coordinates against those returned from the converter to find errors. Because we're working with decimal numbers we must settle for values that are close enough (in this case the same up to six decimal places).
-
-```js
-converted.closeEnough(yourDecimalCoordinatesToTest) //must be a string separated by ,
-```
+**Please add coordinate formats that throw an error in the Issues.**
 
 ### License
 MIT Licence
