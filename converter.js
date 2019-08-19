@@ -182,20 +182,56 @@ module.exports = function(coordsString) {
 
 
     //we need to get the verbatim coords from the string
-    //the conversion worked, so we should be able to split down the middle
-    var middle = Math.round(coordsString.length/2)    
-    var verbatimLat = coordsString.substr(0, middle).trim()
-    var verbatimLng = coordsString.substr(middle).trim()
-    //remove any separators if they're in there
-    var seps = "[,/]"
-    var reg = new RegExp(seps)
-    //verbatimLat
-    if(reg.test(verbatimLat[verbatimLat.length - 1])) {
-      verbatimLat = verbatimLat.substr(0, verbatimLat.length - 1).trim()
+    //we can't split down the middle because if there are decimals they may have different numbers on each side
+    //so we need to find the separating character, or if none, use the match values to split down the middle
+    var verbatimLat
+    var verbatimLng
+
+    var sepChars = /[,/\u0020]/g //comma, forward slash and spacebar
+    var seps = coordsString.match(sepChars)
+
+    if (seps == null) {
+      //split down the middle
+      var middle = Math.floor(coordsString.length/2)
+      verbatimLat = coordsString.substring(0, middle).trim()
+      verbatimLng = coordsString.substring(middle).trim()
     }
-    //verbatimLong
-    if(reg.test(verbatimLng[0])) {
-      verbatimLng = verbatimLng.substr(1).trim()
+    else { //if length is odd then find the index of the middle value
+      
+      //get the middle index
+      var middle
+      //easy for odd numbers
+      if (seps.length % 2 == 1) {
+        middle = Math.floor(seps.length / 2) 
+      }
+      else {
+        middle = (seps.length / 2) - 1
+      }
+
+
+      //walk through seps until we get to the middle
+      var splitIndex = 0;
+      
+      //it might be only one value
+      if (middle == 0){
+        splitIndex = coordsString.indexOf(seps[0])
+        verbatimLat = coordsString.substring(0, splitIndex).trim()
+        verbatimLng = coordsString.substring(splitIndex + 1).trim()
+      }
+      else {
+        var currSepIndex = 0
+        var startSearchIndex = 0
+        while (currSepIndex <= middle){
+          splitIndex = coordsString.indexOf(seps[currSepIndex], startSearchIndex)
+          startSearchIndex = splitIndex + 1
+          currSepIndex++
+        }
+
+        verbatimLat = coordsString.substring(0, splitIndex).trim()
+        verbatimLng = coordsString.substring(splitIndex + 1).trim()
+
+      }
+
     }
 
     //all done!!

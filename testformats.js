@@ -240,7 +240,7 @@ var otherFormats = [
     decimalLongitude: 28.2344
   },
   {
-    verbatimCoordinates: '40° 26.7717 -79° 56.9317',
+    verbatimCoordinates: '40° 26.7717 -79° 56.93172',
     verbatimLatitude: '40° 26.7717', 
     verbatimLongitude: '-79° 56.93172', 
     decimalLatitude: 40.446195,
