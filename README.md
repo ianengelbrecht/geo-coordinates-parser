@@ -41,4 +41,4 @@ covert.formats
 MIT Licence
 
 ### Acknowledgements
-Support for development was provided by the [Animal Demography Unit](http://adu.uct.ac.za) of the University of Cape Town.
+Support for development was provided by the [Animal Demography Unit](http://adu.uct.ac.za) of the University of Cape Town, and the [Natural Science Collections Facility](http://nscf.co.za).
