@@ -19,7 +19,16 @@
     "decimal degrees",
     "degrees minutes seconds",
     "degrees minutes",
-    "Darwin Core"
+    "Darwin Core",
+    "DMS",
+    "DM",
+    "DD",
+    "DDD° MM' SS.S\"",
+    "DDD° MM.MMM'",
+    "DDD.DDDDD°",
+    "DD MM SS",
+    "DD MM.MMM",
+    "DD.DDDDD"
   ],
   "author": "Ian Engelbrecht",
   "license": "MIT",
