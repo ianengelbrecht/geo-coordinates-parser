@@ -4,9 +4,9 @@ A Javascript function for reading a variety of coordinate formats and converting
 
 ### Usage
 ```js
-parseCoordsString = require('geo-coordinate-parser');
+const convert = require('geo-coordinate-parser');
 
-let converted = parseCoordsString('40° 26.7717, -79° 56.93172');
+let converted = convert('40° 26.7717, -79° 56.93172');
 
 converted.decimalLatitude; // 40.446195 ✓
 converted.decimalLongitude; // -79.948862 ✓
@@ -28,6 +28,12 @@ All formats (except the 'exotic formats') covered by [npm coordinate-parser](htt
 - 27deg 15min 45.2sec S 18deg 32min 53.7sec E
 - 40° 26.7717 -79° 56.93172
 - 18.24S 22.45E // read as degrees and minutes
+
+Formats used to testing can be be accessed with:
+
+```js
+covert.formats
+```
 
 **Note to users: Please add coordinate formats that throw an error in the Github Issues.**
 
