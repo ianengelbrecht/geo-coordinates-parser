@@ -2,6 +2,8 @@
 
 A Javascript function for reading a variety of coordinate formats and converting to decimal numbers. Builds on other efforts for convenience by returning the verbatim coordinates and the decimal coordinates all in one object. Also includes a function to test existing decimal coordinates against those from the converter. 
 
+##If you like this package please [star it on GitHub](https://github.com/ianengelbrecht/geo-coordinates-parser)
+
 ### Usage
 ```js
 const convert = require('geo-coordinate-parser');
