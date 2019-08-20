@@ -1,0 +1,7 @@
+This is to bundle the function to make it available for browsers
+
+Inside /bundle run the following
+
+browserify -p tinyify in.js --standalone convert > geocoordsparser.js
+
+This puts a function called convert into the global environment

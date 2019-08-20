@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Title of the document</title>
+<script type="text/javascript" src="geocoordsparser.js"></script>
+</head>
+
+<body>
+  
+  <h1>Add Coordinates here and click convert</h1>
+  <input type="text" id="inputcoords" size="50"><br><br/>
+  <button onclick="convertCoords()">Convert</button><br/><br/>
+  decimalLatitude: <span id="ddlat"></span><br/>
+  decimalLongitude: <span id="ddlng"></span><br/>
+  verbatimLatitude: <span id="vlat"></span><br/>
+  verbatimLongitude: <span id="vlng"></span><br/>
+  
+  <script>
+    function convertCoords() {
+      var coordsString = document.getElementById("inputcoords").value.trim()
+      if(coordsString){
+
+        var converted = convert(coordsString)
+        document.getElementById("ddlat").textContent = converted.decimalLatitude
+        document.getElementById("ddlng").textContent = converted.decimalLongitude
+        document.getElementById("vlat").textContent = converted.verbatimLatitude
+        document.getElementById("vlng").textContent = converted.verbatimLongitude
+      }
+      else {
+        alert("please enter valid coordinates")
+      }
+    }
+  
+  </script>
+
+</body>
+
+</html>

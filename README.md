@@ -39,6 +39,9 @@ covert.formats
 
 **Note to users: Please add coordinate formats that throw an error in the Github Issues.**
 
+### Want to use it in the browser?
+A ready bundled script is available the source code, in the bundle directory, named geocoordsparser.js. Include it in a script tag and it adds a function called convert into your environment.
+
 ### License
 MIT Licence
 
