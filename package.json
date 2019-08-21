@@ -1,8 +1,8 @@
 {
   "name": "geo-coordinates-parser",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A Javascript function for reading a variety of coordinate formats and converting to decimal numbers. Builds on other efforts by returning the verbatim coordinates and the decimal coordinates all in one object.",
-  "main": "converter.js",
+  "main": "merge.js",
   "scripts": {
     "test": "node test.js"
   },
@@ -36,7 +36,7 @@
     "url": "https://github.com/ianengelbrecht/geo-coordinates-parser/issues"
   },
   "homepage": "https://github.com/ianengelbrecht/geo-coordinates-parser#readme",
-  "dependencies": {
+  "devDependencies": {
     "tinyify": "^2.5.1"
   }
 }
