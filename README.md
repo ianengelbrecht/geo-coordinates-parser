@@ -1,6 +1,6 @@
 # Geo Coordinate Parser
 
-A Javascript function for reading a variety of coordinate formats and converting to decimal numbers. Builds on other efforts for convenience by returning the verbatim coordinates and the decimal coordinates all in one object. Also includes a function to test existing decimal coordinates against those from the converter. 
+A Javascript function for reading a variety of coordinate formats and converting to decimal latitude and longitude. Builds on other efforts for convenience by returning the verbatim coordinates and the decimal coordinates all in one object. Also includes a function to test existing decimal coordinates against those from the converter. 
 
 ##If you like this package please [star it on GitHub](https://github.com/ianengelbrecht/geo-coordinates-parser)
 
@@ -25,22 +25,25 @@ converted.closeEnough(yourDecimalCoordinatesToTest) //must be a string separated
 
 ### Supported formats
 
-All formats (except the 'exotic formats') covered by [npm coordinate-parser](https://www.npmjs.com/package/coordinate-parser) and the [coordinate regex in this GitHub Gist](https://gist.github.com/moole/3707127/337bd31d813a10abcf55084381803e5bbb0b20dc), as well as the following:
+All formats (except the 'exotic formats') covered by [npm coordinate-parser](https://www.npmjs.com/package/coordinate-parser) and the [coordinate regex in this GitHub Gist](https://gist.github.com/moole/3707127/337bd31d813a10abcf55084381803e5bbb0b20dc), including the following:
 - -23.3245° S / 28.2344° E
 - 27deg 15min 45.2sec S 18deg 32min 53.7sec E
 - 40° 26.7717 -79° 56.93172
 - 18.24S 22.45E // read as degrees and minutes
+- 27.15.45S 18.32.53E
 
-Formats used to testing can be be accessed with:
+...and others.
+
+Formats used for testing can be be accessed with:
 
 ```js
 covert.formats
 ```
 
-**Note to users: Please add coordinate formats that throw an error in the Github Issues.**
+**Please add coordinate formats that throw an error in the Github Issues.**
 
 ### Want to use it in the browser?
-A ready bundled script is available the source code, in the bundle directory, named geocoordsparser.js. Include it in a script tag and it adds a function called convert into your environment.
+A ready bundled script is available in the source code, in the bundle directory, named geocoordsparser.js. [Download](https://stackoverflow.com/a/13593430/3210158), include it in a script tag in your html, and you'll have a function called convert available in your environment.
 
 ### License
 MIT Licence
