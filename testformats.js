@@ -246,6 +246,13 @@ var otherFormats = [
     decimalLatitude: 40.446195,
     decimalLongitude: -79.948862
 
+  },
+  {
+    verbatimCoordinates: '27.15.45S 18.32.53E',
+    verbatimLatitude: '27.15.45S', 
+    verbatimLongitude: '18.32.53E',
+    decimalLatitude: -27.2625,
+    decimalLongitude: 18.548055
   }
 ]
 

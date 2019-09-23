@@ -43,7 +43,7 @@ covert.formats
 **Please add coordinate formats that throw an error in the Github Issues.**
 
 ### Want to use it in the browser?
-A ready bundled script is available in the source code, in the bundle directory, named geocoordsparser.js. [Download](https://stackoverflow.com/a/13593430/3210158), include it in a script tag in your html, and you'll have a function called convert available in your environment.
+A ready bundled script is available in the source code, in the bundle directory, named geocoordsparser.js. [Download](https://stackoverflow.com/a/13593430/3210158), include it in a script tag in your html, and you'll have a function called `convert()` available in your environment.
 
 ### License
 MIT Licence

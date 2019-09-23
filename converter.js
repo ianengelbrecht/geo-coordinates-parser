@@ -1,7 +1,7 @@
 //function for converting coordinates from a string to decimal and verbatim
 function converter(coordsString) {
 
-  coordsString = coordsString.replace(/\s\s+/g, ' '); //just to tidy up whitespaces
+  coordsString = coordsString.replace(/\s\s+/g, ' ').trim(); //just to tidy up whitespaces
 
   var ddLat = null;
   var ddLng = null; 
@@ -24,7 +24,8 @@ function converter(coordsString) {
       if(ddLng.includes(',')) {
         ddLng.replace(',', '.');
       }
-      //
+      
+      //get directions
       if(match[1]){
         latdir = match[1];
         lngdir = match[5];
@@ -333,7 +334,7 @@ function checkMatch(match) { //test if the matched groups arrays are 'balanced'.
 //as decimal arithmetic is not straightforward, we approximate
 function decimalsCloseEnough(dec1, dec2){
   var diff = Math.abs(dec1 - dec2)
-  return diff <= 0.0000011
+  return diff <= 0.0000019
 }
 
 function coordsCloseEnough(coordsToTest) {
