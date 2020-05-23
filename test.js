@@ -7,7 +7,7 @@ let allPassed = true;
 testFormats.some(t => {  //.some so we can break
 
   try {
-    var converted = convert(t.verbatimCoordinates)
+    var converted = convert(t.verbatimCoordinates, 8)
 
     var testDecimalCoordsString = `${t.decimalLatitude},${t.decimalLongitude}`
     
@@ -51,8 +51,3 @@ if (allPassed) {
 
 
 
-//as decimal arithmetic is not straightforward, we approximate
-function decimalsCloseEnough(dec1, dec2){
-  var diff = Math.abs(dec1 - dec2)
-  return diff <= 0.0000011
-}

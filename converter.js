@@ -1,5 +1,10 @@
 //function for converting coordinates from a string to decimal and verbatim
-function converter(coordsString) {
+//TODO, add number of decimal places to return 
+function converter(coordsString, decimalPlaces) {
+
+  if(!decimalPlaces) {
+    decimalPlaces = 5
+  }
 
   coordsString = coordsString.replace(/\s\s+/g, ' ').trim(); //just to tidy up whitespaces
 
@@ -236,45 +241,24 @@ function converter(coordsString) {
 
     //all done!!
     //just truncate the decimals appropriately
-    ddLat = ddLat.toString()
-    if(ddLat.includes(',')) {
-      var parts = ddLat.split(',')
-      if(parts[1].length > 6){
-        parts[1] = parts[1].substr(0,6)
-      }
-    }
-    else {
-      var parts = ddLat.split('.')
-      if(parts[1].length > 6){
-        parts[1] = parts[1].substr(0,6)
-      }
+    if(isNaN(ddLat) && ddLat.includes(',')) {
+      ddLat = ddLat.replace(',', '.')
     }
 
-    ddLat = parts.join('.')
+    ddLat = Number(Number(ddLat).toFixed(decimalPlaces))
 
-    ddLng = ddLng.toString()
-    if(ddLng.includes(',')) {
-      var parts = ddLng.split(',')
-      if(parts[1].length > 6){
-        parts[1] = parts[1].substr(0,6)
-      }
-    }
-    else {
-      var parts = ddLng.split('.')
-      if(parts[1].length > 6){
-        parts[1] = parts[1].substr(0,6)
-      }
+    if(isNaN(ddLng) && ddLng.includes(',')) {
+      ddLng = ddLng.replace(',', '.')
     }
 
-    ddLng = parts.join('.')
-    
+    ddLng = Number(Number(ddLng).toFixed(decimalPlaces))
 
     return {
       verbatimCoordinates: coordsString, 
       verbatimLatitude: verbatimLat,
       verbatimLongitude: verbatimLng,
-      decimalLatitude:  Number(ddLat),
-      decimalLongitude: Number(ddLng),
+      decimalLatitude:  ddLat,
+      decimalLongitude: ddLng,
       decimalCoordinates: `${ddLat},${ddLng}`,
       closeEnough: coordsCloseEnough
     }
@@ -318,7 +302,7 @@ function checkMatch(match) { //test if the matched groups arrays are 'balanced'.
   
   
   var halflen = filteredMatch.length/2;
-  result = true;
+  var result = true;
   for (var i = 0; i < halflen; i++) {
     if (numerictest.test(filteredMatch[i]) != numerictest.test(filteredMatch[i + halflen]) || stringtest.test(filteredMatch[i]) != stringtest.test(filteredMatch[i + halflen])) {
       result = false;
@@ -333,8 +317,14 @@ function checkMatch(match) { //test if the matched groups arrays are 'balanced'.
 
 //as decimal arithmetic is not straightforward, we approximate
 function decimalsCloseEnough(dec1, dec2){
-  var diff = Math.abs(dec1 - dec2)
-  return diff <= 0.0000019
+  var originaldiff = Math.abs(dec1 - dec2)
+  diff = Number(originaldiff.toFixed(6))
+  if (diff <= 0.00001){
+    return true
+  }
+  else {
+    return false
+  }
 }
 
 function coordsCloseEnough(coordsToTest) {
