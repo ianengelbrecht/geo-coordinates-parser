@@ -6,7 +6,7 @@ A Javascript function for reading a variety of coordinate formats and converting
 
 ### Installation
 ```
-npm install geo-coordinate-parser
+npm install geo-coordinates-parser
 ```
 
 ### Usage
