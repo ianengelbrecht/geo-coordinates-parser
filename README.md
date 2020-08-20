@@ -4,12 +4,30 @@ A Javascript function for reading a variety of coordinate formats and converting
 
 ##If you like this package please [star it on GitHub](https://github.com/ianengelbrecht/geo-coordinates-parser)
 
+### Installation
+```
+npm install geo-coordinate-parser
+```
+
 ### Usage
 ```js
 const convert = require('geo-coordinate-parser');
-
+```
+OR
+```js
+import convert from 'geo-coordinate-parser' //ES6
+```
+THEN
+```js
 let converted = convert('40° 26.7717, -79° 56.93172');
+```
+OR add the number of decimal places you want (but be reasonable, [see Coordinate Precision here](https://en.wikipedia.org/wiki/Decimal_degrees)) -- default is 5
 
+```js
+let converted = convert(coordinatesString, integerDecimalPlaces)
+```
+THEN
+```js
 converted.decimalLatitude; // 40.446195 ✓
 converted.decimalLongitude; // -79.948862 ✓
 converted.verbatimLatitude; // '40° 26.7717' ✓
@@ -36,7 +54,7 @@ All formats (except the 'exotic formats') covered by [npm coordinate-parser](htt
 
 Formats used for testing can be be accessed with:
 
-```js
+```
 covert.formats
 ```
 
