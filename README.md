@@ -1,4 +1,4 @@
-# Geo Coordinate Parser
+# Geo Coordinates Parser
 
 A Javascript function for reading a variety of coordinate formats and converting to decimal latitude and longitude. Builds on other efforts for convenience by returning the verbatim coordinates and the decimal coordinates all in one object. Also includes a function to test existing decimal coordinates against those from the converter. 
 
@@ -11,11 +11,11 @@ npm install geo-coordinates-parser
 
 ### Usage
 ```js
-const convert = require('geo-coordinate-parser');
+const convert = require('geo-coordinates-parser');
 ```
 OR
 ```js
-import convert from 'geo-coordinate-parser' //ES6
+import convert from 'geo-coordinates-parser' //ES6
 ```
 THEN
 ```js
