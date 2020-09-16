@@ -1,4 +1,9 @@
 const convert = require('./converter')
-const test = 'N49 0.000 E02 33.314'
-
-console.log(convert(test))
+const test = '± 1 km on Schweizer rd (R504) from Schweizer Reinecke to Ipelegeng.'
+try{
+  let converted = convert(test)
+  console.log(converted)
+}
+catch(err){
+  console.log(err.message)
+}
