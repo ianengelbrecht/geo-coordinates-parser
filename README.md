@@ -1,6 +1,6 @@
 # Geo Coordinates Parser
 
-A Javascript function for reading a variety of coordinate formats and converting to decimal latitude and longitude. Builds on other efforts for convenience by returning the verbatim coordinates and the decimal coordinates all in one object. Also includes a function to test existing decimal coordinates against those from the converter. 
+A Javascript function for reading a variety of coordinate formats and converting to decimal latitude and longitude. Builds on other efforts for convenience by returning the verbatim coordinates and the decimal coordinates all in one object. Can be used to extract coordinates from longer strings. Also includes a function to test existing decimal coordinates against those from the converter. 
 
 ##If you like this package please [star it on GitHub](https://github.com/ianengelbrecht/geo-coordinates-parser)
 
@@ -19,12 +19,25 @@ import convert from 'geo-coordinates-parser' //ES6
 ```
 THEN
 ```js
-let converted = convert('40° 26.7717, -79° 56.93172');
+let converted;
+try {
+  converted = convert('40° 26.7717, -79° 56.93172');
+}
+catch {
+  //we get here if the string is not valid coordinates
+}
+
 ```
 OR add the number of decimal places you want (but be reasonable, [see Coordinate Precision here](https://en.wikipedia.org/wiki/Decimal_degrees)) -- default is 5
 
 ```js
-let converted = convert(coordinatesString, integerDecimalPlaces)
+try{
+  let converted = convert(coordinatesString, integerDecimalPlaces)
+  //do stuff with coordinates...
+}
+catch{
+  //coordinates not valid
+}
 ```
 THEN
 ```js
@@ -55,7 +68,7 @@ All formats (except the 'exotic formats') covered by [npm coordinate-parser](htt
 Formats used for testing can be be accessed with:
 
 ```
-covert.formats
+convert.formats
 ```
 
 **Please add coordinate formats that throw an error in the Github Issues.**

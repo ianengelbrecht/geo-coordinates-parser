@@ -189,17 +189,18 @@ function converter(coordsString, decimalPlaces) {
     //we need to get the verbatim coords from the string
     //we can't split down the middle because if there are decimals they may have different numbers on each side
     //so we need to find the separating character, or if none, use the match values to split down the middle
+    var verbatimCoordinates = match[0].trim()
     var verbatimLat
     var verbatimLng
 
     var sepChars = /[,/\u0020]/g //comma, forward slash and spacebar
-    var seps = coordsString.match(sepChars)
+    var seps = verbatimCoordinates.match(sepChars)
 
     if (seps == null) {
       //split down the middle
       var middle = Math.floor(coordsString.length/2)
-      verbatimLat = coordsString.substring(0, middle).trim()
-      verbatimLng = coordsString.substring(middle).trim()
+      verbatimLat = verbatimCoordinates.substring(0, middle).trim()
+      verbatimLng = verbatimCoordinates.substring(middle).trim()
     }
     else { //if length is odd then find the index of the middle value
       
@@ -219,21 +220,21 @@ function converter(coordsString, decimalPlaces) {
       
       //it might be only one value
       if (middle == 0){
-        splitIndex = coordsString.indexOf(seps[0])
-        verbatimLat = coordsString.substring(0, splitIndex).trim()
-        verbatimLng = coordsString.substring(splitIndex + 1).trim()
+        splitIndex = verbatimCoordinates.indexOf(seps[0])
+        verbatimLat = verbatimCoordinates.substring(0, splitIndex).trim()
+        verbatimLng = verbatimCoordinates.substring(splitIndex + 1).trim()
       }
       else {
         var currSepIndex = 0
         var startSearchIndex = 0
         while (currSepIndex <= middle){
-          splitIndex = coordsString.indexOf(seps[currSepIndex], startSearchIndex)
+          splitIndex = verbatimCoordinates.indexOf(seps[currSepIndex], startSearchIndex)
           startSearchIndex = splitIndex + 1
           currSepIndex++
         }
 
-        verbatimLat = coordsString.substring(0, splitIndex).trim()
-        verbatimLng = coordsString.substring(splitIndex + 1).trim()
+        verbatimLat = verbatimCoordinates.substring(0, splitIndex).trim()
+        verbatimLng = verbatimCoordinates.substring(splitIndex + 1).trim()
 
       }
 
@@ -254,7 +255,7 @@ function converter(coordsString, decimalPlaces) {
     ddLng = Number(Number(ddLng).toFixed(decimalPlaces))
 
     return {
-      verbatimCoordinates: coordsString, 
+      verbatimCoordinates, 
       verbatimLatitude: verbatimLat,
       verbatimLongitude: verbatimLng,
       decimalLatitude:  ddLat,

@@ -1,5 +1,5 @@
 const convert = require('./converter')
-const test = '± 1 km on Schweizer rd (R504) from Schweizer Reinecke to Ipelegeng.'
+const test = 'Between Sannieshof and Bessiesvlei. 26.4558°S 25.8644°E.'
 try{
   let converted = convert(test)
   console.log(converted)
