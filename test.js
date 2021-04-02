@@ -25,9 +25,9 @@ testFormats.some(t => {  //.some so we can break
     //check the verbatim coords are correct
     if(converted.verbatimLatitude != t.verbatimLatitude || converted.verbatimLongitude != t.verbatimLongitude) {
       console.log("Error in verbatim extraction")
-      console.log(t.verbatimCoordinates)
-      console.log(t.verbatimLatitude)
-      console.log(t.verbatimLongitude)
+      console.log('For', t.verbatimCoordinates)
+      console.log('got', converted.verbatimLatitude, 'should be ', t.verbatimLatitude)
+      console.log('got', converted.verbatimLongitude, 'should be', t.verbatimLongitude)
       allPassed = false;
       return true
     }

@@ -1,8 +1,8 @@
 # Geo Coordinates Parser
 
-A Javascript function for reading a variety of coordinate formats and converting to decimal latitude and longitude. Builds on other efforts for convenience by returning the verbatim coordinates and the decimal coordinates all in one object. Can be used to extract coordinates from longer strings. Also includes a function to test existing decimal coordinates against those from the converter. 
+A Javascript function for reading a variety of coordinate formats and converting to decimal latitude and longitude. Builds on previous efforts and returns the verbatim coordinates and the decimal coordinates together in one object for convenience. Can be used to extract coordinates from longer strings. Also includes a function to test existing decimal coordinates against those from the converter. 
 
-##If you like this package please [star it on GitHub](https://github.com/ianengelbrecht/geo-coordinates-parser)
+##If you like this tool please [star it on GitHub](https://github.com/ianengelbrecht/geo-coordinates-parser)
 
 ### Installation
 ```
@@ -15,7 +15,7 @@ const convert = require('geo-coordinates-parser');
 ```
 OR
 ```js
-import convert from 'geo-coordinates-parser' //ES6
+import convert from 'geo-coordinates-parser' //ES6, if you're using a bundler
 ```
 THEN
 ```js
@@ -24,7 +24,7 @@ try {
   converted = convert('40° 26.7717, -79° 56.93172');
 }
 catch {
-  //we get here if the string is not valid coordinates
+  /*we get here if the string is not valid coordinates or format is inconsistent between lat and long*/
 }
 
 ```
@@ -39,7 +39,7 @@ catch{
   //coordinates not valid
 }
 ```
-THEN
+ALSO
 ```js
 converted.decimalLatitude; // 40.446195 ✓
 converted.decimalLongitude; // -79.948862 ✓
@@ -48,10 +48,10 @@ converted.verbatimLongitude; // '-79° 56.93172' ✓
 ```
 The returned object includes properties verbatimCoordinates, verbatimLatitude, verbatimLongitude, decimalLatitude, decimalLatitude, and decimalCoordinates.
 
-Sometimes we may want to validate existing decimal coordinates against those returned from the converter to find errors. Because we're working with decimal numbers we must settle for values that are close enough (in this case the same up to six decimal places).
+Sometimes we may want to validate existing decimal coordinates against those returned from the converter to find errors. Because we're working with decimal numbers we must settle for values that are close enough (in this case equal up to six decimal places).
 
 ```js
-converted.closeEnough(yourDecimalCoordinatesToTest) //must be a string separated by ,
+converted.closeEnough(yourDecimalCoordinatesToTest) //must be a numbers separated by ,
 ```
 
 ### Supported formats

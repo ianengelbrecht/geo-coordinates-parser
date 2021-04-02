@@ -131,6 +131,11 @@ var coordsParserFormats = [
     verbatimCoordinates: '40° 7.38, -74° 7.38',
     verbatimLatitude: '40° 7.38', 
     verbatimLongitude: '-74° 7.38'
+  },
+  {
+    verbatimCoordinates: '40 7 22.8; -74 7 22.8', //semicolon separator
+    verbatimLatitude: '40 7 22.8', 
+    verbatimLongitude: '-74 7 22.8'
   }
 ]
 
@@ -213,6 +218,13 @@ var coordsRegexFormats = [
     verbatimLongitude: '-79.948862',
     decimalLatitude: 40.446195,
     decimalLongitude: -79.948862
+  },
+  {
+    verbatimCoordinates: '40.123256; -74.123256', //testing semicolon
+    verbatimLatitude: '40.123256', 
+    verbatimLongitude: '-74.123256',
+    decimalLatitude: 40.123256, 
+    decimalLongitude: -74.123256 
   }  
 ]
 
