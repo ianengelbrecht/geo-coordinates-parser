@@ -71,7 +71,9 @@ Formats used for testing can be be accessed with:
 convert.formats
 ```
 
-**Please add coordinate formats that throw an error in the Github Issues.**
+**<span style="color:red">Please add coordinate formats that throw an error in the Github Issues.</span>**
+
+**<span style="color:red">Note that formats like 24.56S 26.48E are treated as degrees and minutes! And 24.0, 26.0 is treated as an error. If you don't want this behaviour you need to catch these cases with your own code before you use convert.</span>**
 
 ### Want to use it in the browser?
 A ready bundled script is available in the source code, in the bundle directory, named geocoordsparser.js. [Download](https://stackoverflow.com/a/13593430/3210158), include it in a script tag in your html, and you'll have a function called `convert()` available in your environment.
