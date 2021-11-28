@@ -1,5 +1,8 @@
 //function for converting coordinates from a string to decimal and verbatim
-//TODO, add number of decimal places to return 
+
+const toCoordinateFormat = require('./toCoordinateFormat.js')
+
+
 function converter(coordsString, decimalPlaces) {
 
   if(!decimalPlaces) {
@@ -254,15 +257,16 @@ function converter(coordsString, decimalPlaces) {
 
     ddLng = Number(Number(ddLng).toFixed(decimalPlaces))
 
-    return {
+    return Object.freeze({
       verbatimCoordinates, 
       verbatimLatitude: verbatimLat,
       verbatimLongitude: verbatimLng,
       decimalLatitude:  ddLat,
       decimalLongitude: ddLng,
       decimalCoordinates: `${ddLat},${ddLng}`,
-      closeEnough: coordsCloseEnough
-    }
+      closeEnough: coordsCloseEnough,
+      toCoordinateFormat
+    })
   }
   else {
     throw new Error("coordinates pattern match failed")
@@ -347,5 +351,12 @@ var dms_periods = /(NORTH|SOUTH|[NS])?[\ \t]*([+-]?[0-8]?[0-9])[\ \t]*(\.)[\ \t]
 var dms_abbr = /(NORTH|SOUTH|[NS])?[\ \t]*([+-]?[0-8]?[0-9])[\ \t]*(D(?:EG)?(?:REES)?)[\ \t]*([0-5]?[0-9])[\ \t]*(M(?:IN)?(?:UTES)?)[\ \t]*((?:[0-5]?[0-9])(?:\.\d{1,3})?)?(S(?:EC)?(?:ONDS)?)?[\ \t]*(NORTH|SOUTH|[NS])?(?:[\ \t]*[,/;][\ \t]*|[\ \t]*)(EAST|WEST|[EW])?[\ \t]*([+-]?[0-1]?[0-9]?[0-9])[\ \t]*(D(?:EG)?(?:REES)?)[\ \t]*([0-5]?[0-9])[\ \t]*(M(?:IN)?(?:UTES)?)[\ \t]*((?:[0-5]?[0-9])(?:\.\d{1,3})?)?(S(?:EC)?(?:ONDS)?)[\ \t]*(EAST|WEST|[EW])?/i;
 //everything else - gives array of 17 values 
 var coords_other = /(NORTH|SOUTH|[NS])?[\ \t]*([+-]?[0-8]?[0-9])[\ \t]*([•º°\.:]|D(?:EG)?(?:REES)?)?[\ \t]*,?([0-5]?[0-9](?:\.\d{1,})?)?[\ \t]*(['′´’\.:]|M(?:IN)?(?:UTES)?)?[\ \t]*,?((?:[0-5]?[0-9])(?:\.\d{1,3})?)?[\ \t]*(''|′′|’’|´´|["″”\.])?[\ \t]*(NORTH|SOUTH|[NS])?(?:\s*[,/;]\s*|\s*)(EAST|WEST|[EW])?[\ \t]*([+-]?[0-1]?[0-9]?[0-9])[\ \t]*([•º°\.:]|D(?:EG)?(?:REES)?)?[\ \t]*,?([0-5]?[0-9](?:\.\d{1,})?)?[\ \t]*(['′´’\.:]|M(?:IN)?(?:UTES)?)?[\ \t]*,?((?:[0-5]?[0-9])(?:\.\d{1,3})?)?[\ \t]*(''|′′|´´|’’|["″”\.])?[\ \t]*(EAST|WEST|[EW])?/i;
+
+const to = Object.freeze({
+  DMS: 'DMS',
+  DM: 'DM'
+})
+
+converter.to = to
 
 module.exports = converter

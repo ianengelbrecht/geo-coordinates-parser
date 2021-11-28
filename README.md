@@ -48,14 +48,14 @@ converted.verbatimLongitude; // '-79° 56.93172' ✓
 ```
 The returned object includes properties verbatimCoordinates, verbatimLatitude, verbatimLongitude, decimalLatitude, decimalLatitude, and decimalCoordinates.
 
+### Validating other conversions
 Sometimes we may want to validate existing decimal coordinates against those returned from the converter to find errors. Because we're working with decimal numbers we must settle for values that are close enough (in this case equal up to six decimal places).
 
 ```js
-converted.closeEnough(yourDecimalCoordinatesToTest) //must be a numbers separated by ,
+converted.closeEnough(yourDecimalCoordinatesToValidate) //must be a numbers separated by ,
 ```
 
 ### Supported formats
-
 All formats (except the 'exotic formats') covered by [npm coordinate-parser](https://www.npmjs.com/package/coordinate-parser) and the [coordinate regex in this GitHub Gist](https://gist.github.com/moole/3707127/337bd31d813a10abcf55084381803e5bbb0b20dc), including the following:
 - -23.3245° S / 28.2344° E
 - 27deg 15min 45.2sec S 18deg 32min 53.7sec E
@@ -76,9 +76,12 @@ convert.formats
 ### Want to use it in the browser?
 A ready bundled script is available in the source code, in the bundle directory, named geocoordsparser.js. [Download](https://stackoverflow.com/a/13593430/3210158), include it in a script tag in your html, and you'll have a function called `convert()` available in your environment.
 
-### Other implementations
-There is an [MS Excel plugin here](http://bit.ly/convertcoords). See the README for instructions.
-More to come...
+### Convert back to standard formats
+Sometimes we might want to convert back to more traditional formats for representing coordinates, such as DMS or DM. This can be useful for standardizing coordinates. The convert function has an enum to help.
+
+```js
+converted.toCoordinateFormat(convert.to.DMS) /// '40° 26.771" N, 79° 56.932" W' ✓
+```
 
 ### License
 MIT Licence
