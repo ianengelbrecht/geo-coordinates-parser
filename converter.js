@@ -2,9 +2,15 @@
 
 const toCoordinateFormat = require('./toCoordinateFormat.js')
 
-
+/**
+ * Function for converting coordinates in a variety of formats to decimal coordinates
+ * @param {string} coordsString The coordinates string to convert
+ * @param {number} decimalPlaces The number of decimal places for converted coordinates; default is 5
+ * @returns {object} { verbatimCoordinates, decimalCoordinates, decimalLatitude, decimalLongitude }
+ */
 function converter(coordsString, decimalPlaces) {
 
+  //TODO add exact match to entered string, so that it can be used to filter out superflous text around it
   if(!decimalPlaces) {
     decimalPlaces = 5
   }
