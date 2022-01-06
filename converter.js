@@ -33,10 +33,10 @@ function converter(coordsString, decimalPlaces) {
       
       //need to fix if there are ','s instead of '.'
       if(ddLat.includes(',')) {
-        ddLat.replace(',','.');
+        ddLat = ddLat.replace(',','.');
       }
       if(ddLng.includes(',')) {
-        ddLng.replace(',', '.');
+        ddLng = ddLng.replace(',', '.');
       }
       
       //get directions

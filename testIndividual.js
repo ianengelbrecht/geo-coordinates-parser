@@ -1,5 +1,5 @@
 const convert = require('./converter')
-const test = '42:12:4S 27:17:18E'
+const test = '27,71372° S 23,07771° E'
 
 try{
   let converted = convert(test)
@@ -7,8 +7,14 @@ try{
   console.log(converted.toCoordinateFormat(convert.to.DM))
 
   //and just to make sure it's frozen
+  let previous = converted.decimalLatitude
   converted.decimalLatitude = 24
-  console.log(converted)
+  if(converted.decimalLatitude === previous) {
+    console.log('the result is frozen')
+  }
+  else {
+    console.error('!!!The result is not frozen!!!!')
+  }
 }
 catch(err){
   console.log(err.message)
