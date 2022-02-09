@@ -76,7 +76,8 @@ convert.formats
 **<span style="color:red">Note that formats like 24.56S 26.48E are treated as degrees and minutes! And 24.0, 26.0 is treated as an error. If you don't want this behaviour you need to catch these cases with your own code before you use convert.</span>**
 
 ### Want to use it in the browser?
-A ready bundled script is available in the source code, in the bundle directory, named geocoordsparser.js. [Download](https://stackoverflow.com/a/13593430/3210158), include it in a script tag in your html, and you'll have a function called `convert()` available in your environment.
+Add ```<script src="https://cdn.jsdelivr.net/npm/geo-coordinates-parser/bundle/geocoordsparser.js"></script>```
+to your html head and you'll have the ```convert``` function available globally. You won't have .formats, .closeEnough or .toCoordinateFormat though, only the coordinates conversion function.
 
 ### Convert back to standard formats
 Sometimes we might want to convert back to more traditional formats for representing coordinates, such as DMS or DM. This can be useful for standardizing coordinates. The convert function has an enum to help.
