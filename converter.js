@@ -120,7 +120,8 @@ function converter(coordsString, decimalPlaces) {
       if(match[1]){
         latdir = match[1];
         lngdir = match[9];
-      } else if (match[8]){
+      } 
+      else if (match[8]){
         latdir = match[8];
         lngdir = match[16];
       }
@@ -240,7 +241,6 @@ function converter(coordsString, decimalPlaces) {
         middle = (seps.length / 2) - 1
       }
 
-
       //walk through seps until we get to the middle
       var splitIndex = 0;
       
@@ -302,27 +302,21 @@ function checkMatch(match) { //test if the matched groups arrays are 'balanced'.
   if(!isNaN(match[0])){ //we've matched a number, not what we want....
     return false
   }
+
   //first remove the empty values from the array
   var filteredMatch = match.filter(x=>x);
   
   //we need to shift the array because it contains the whole coordinates string in the first item
   filteredMatch.shift();
   
-  /*
-  //if minutes or seconds are out of bounds, the array length is wrong
-  if (filteredMatch.length == 4) {
-    return false
-  }
-  */
-  
-  //then check the array length is an even number else exit
+  //check the array length is an even number else exit
   if (filteredMatch.length % 2 > 0) {
     return false;
   }
 
   //regex for testing corresponding values match
-  var numerictest = /^[-+]?(\d+|\d+\.\d*|\d*\.\d+)$/; //for testing numeric values
-  var stringtest = /[A-Za-z]+/; //strings - the contents of strings are already matched when this is used
+  var numerictest = /^[-+]?\d+([\.,]{}\d+)?$/; //for testing numeric values
+  var stringtest = /[A-Za-z]+/; //for testing string values (north, south, etc)
   
   
   var halflen = filteredMatch.length/2;
