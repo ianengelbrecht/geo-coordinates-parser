@@ -176,6 +176,19 @@ function converter(coordsString, decimalPlaces) {
     }
   }
 
+  if (ddLat == 0.0 || ddLng == 0.0) {
+    throw new Error('zero coordinate/s provided')
+  }
+
+  //some more validation: no zero coords or degrees only
+  if (Number(Math.round(ddLat)) == Number(ddLat)) {
+    throw new Error('degree only coordinate provided')
+  }
+
+  if (Number(Math.round(ddLng)) == Number(ddLng)) {
+    throw new Error('degree only coordinate provided')
+  }
+
   //check longitude value - it can be wrong!
   if (Math.abs(ddLng) >=180) {
     throw new Error("invalid longitude value")				
@@ -185,14 +198,18 @@ function converter(coordsString, decimalPlaces) {
     
     //make sure the signs and cardinal directions match
     var patt = /S|SOUTH/i;
-    if (patt.test(latdir))
-      if (ddLat > 0)
+    if (patt.test(latdir)) {
+      if (ddLat > 0) {
         ddLat = -1 * ddLat;
+      }
+    }
         
     patt = /W|WEST/i;
-    if (patt.test(lngdir))
-      if (ddLng > 0)
+    if (patt.test(lngdir)){
+      if (ddLng > 0) {
         ddLng = -1 * ddLng;
+      }
+    }
 
 
     //we need to get the verbatim coords from the string
@@ -350,7 +367,7 @@ function coordsCloseEnough(coordsToTest) {
 }
 
 //Coordinates pattern matching regex
-var dd_re = /(NORTH|SOUTH|[NS])?[\s]*([+-]?[0-8]?[0-9](?:[\.,]\d{3,}))([•º°]?)[\s]*(NORTH|SOUTH|[NS])?[\s]*[,/;]?[\s]*(EAST|WEST|[EW])?[\s]*([+-]?[0-1]?[0-9]?[0-9](?:[\.,]\d{3,}))([•º°]?)[\s]*(EAST|WEST|[EW])?/i;
+var dd_re = /(NORTH|SOUTH|[NS])?[\s]*([+-]?[0-8]?[0-9](?:[\.,]\d{3,}))[\s]*([•º°]?)[\s]*(NORTH|SOUTH|[NS])?[\s]*[,/;]?[\s]*(EAST|WEST|[EW])?[\s]*([+-]?[0-1]?[0-9]?[0-9](?:[\.,]\d{3,}))[\s]*([•º°]?)[\s]*(EAST|WEST|[EW])?/i;
 //degrees minutes seconds with '.' as separator - gives array with 15 values
 var dms_periods = /(NORTH|SOUTH|[NS])?[\ \t]*([+-]?[0-8]?[0-9])[\ \t]*(\.)[\ \t]*([0-5]?[0-9])[\ \t]*(\.)?[\ \t]*((?:[0-5]?[0-9])(?:\.\d{1,3})?)?(NORTH|SOUTH|[NS])?(?:[\ \t]*[,/;][\ \t]*|[\ \t]*)(EAST|WEST|[EW])?[\ \t]*([+-]?[0-1]?[0-9]?[0-9])[\ \t]*(\.)[\ \t]*([0-5]?[0-9])[\ \t]*(\.)?[\ \t]*((?:[0-5]?[0-9])(?:\.\d{1,3})?)?(EAST|WEST|[EW])?/i;
 //degrees minutes seconds with words 'degrees, minutes, seconds' as separators (needed because the s of seconds messes with the S of SOUTH) - gives array of 17 values

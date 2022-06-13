@@ -1,11 +1,11 @@
 const convert = require('./converter')
 const testFormats = require('./testformats')
+const failingFormats = require('./failFormats')
 
 let allPassed = true;
 
-//find the first one that doesn't work
-testFormats.some(t => {  //.some so we can break
-
+//FORMATS THAT SHOULD BE CONVERTED
+for (const t of testFormats) {
   try {
     var converted = convert(t.verbatimCoordinates, 8)
 
@@ -18,7 +18,6 @@ testFormats.some(t => {  //.some so we can break
       console.log(t.decimalLatitude)
       console.log(t.decimalLongitude)
       allPassed = false;
-      return true;
     }
     
 
@@ -29,9 +28,7 @@ testFormats.some(t => {  //.some so we can break
       console.log('got', converted.verbatimLatitude, 'should be ', t.verbatimLatitude)
       console.log('got', converted.verbatimLongitude, 'should be', t.verbatimLongitude)
       allPassed = false;
-      return true
     }
-
 
   }
   catch(err) {
@@ -39,10 +36,26 @@ testFormats.some(t => {  //.some so we can break
     console.log(t.verbatimCoordinates)
     console.log(err.message)
     allPassed = false;
-    return true;
   }
-  
-})
+}
+
+
+//FORMATS THAT SHOULD NOT BE CONVERTED
+const converting = []
+for (const f of failingFormats) {
+  try {
+    let converted = convert(f)
+    converting.push(f)
+    allPassed = false
+  }
+  catch {
+    //nothing here
+  }
+}
+
+if(converting.length) {
+  console.log("The following coordinates should NOT have converted successfully: " + converting.join(' | '))
+}
 
 if (allPassed) {
   console.log("all formats successfully converted")

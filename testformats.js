@@ -267,6 +267,13 @@ var otherFormats = [
     decimalLongitude: 18.548055
   }, 
   {
+    verbatimCoordinates: 'S23.43563 °  E22.45634 °', //decimals with spaces before the symbol!!
+    verbatimLatitude: 'S23.43563 °', 
+    verbatimLongitude: 'E22.45634 °',
+    decimalLatitude: -23.43563,
+    decimalLongitude: 22.45634
+  }, 
+  {
     verbatimCoordinates: '27,71372° S 23,07771° E', //decimals with commas
     verbatimLatitude: '27,71372° S', 
     verbatimLongitude: '23,07771° E',
@@ -275,24 +282,7 @@ var otherFormats = [
   }
 ]
 
-let userProvidedFormats = [
-  {
-    //issue https://github.com/ianengelbrecht/geo-coordinates-parser/issues/1
-    verbatimCoordinates: 'N 52d0m0s E 000d0m0s',
-    verbatimLatitude: 'N 52d0m0s', 
-    verbatimLongitude: 'E 000d0m0s',
-    decimalLatitude: 52.00000,
-    decimalLongitude: 0.0000
-  },
-  {
-    // https://github.com/ianengelbrecht/geo-coordinates-parser/issues/1
-    verbatimCoordinates: 'N49 0.000 E02 33.314',
-    verbatimLatitude: 'N49 0.000', 
-    verbatimLongitude: 'E02 33.314',
-    decimalLatitude: 49.00000,
-    decimalLongitude: 2.5552333333333333
-  }
-]
+
 
 function getAllTestFormats() {
   var arr1 = []
@@ -305,7 +295,7 @@ function getAllTestFormats() {
     }
   })
   
-  return [...arr1, ...coordsRegexFormats, ...otherFormats, ...userProvidedFormats]
+  return [...arr1, ...coordsRegexFormats, ...otherFormats]
  
 }
 

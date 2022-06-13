@@ -2,9 +2,9 @@ This is to bundle the function to make it available for browsers
 
 Inside /bundle run the following
 
-browserify -p tinyify ../converter.js --standalone convert > geocoordsparser.js
+browserify -p tinyify ./merge.js --standalone convert > ./bundle/geocoordsparser.js
 
-Then npm publish
+Then update version in package.json, then npm publish, then git...
 
 geocoordsparser.js can then be included in <script> tags
 This puts a function called convert into the global environment
