@@ -38,12 +38,24 @@ function converter(coordsString, decimalPlaces) {
       if(ddLng.includes(',')) {
         ddLng = ddLng.replace(',', '.');
       }
+
+      //validation, we don't want things like 23.00000
+
+      //some more validation: no zero coords or degrees only
+      if (Number(Math.round(ddLat)) == Number(ddLat)) {
+        throw new Error('degree only coordinate provided')
+      }
+
+      if (Number(Math.round(ddLng)) == Number(ddLng)) {
+        throw new Error('degree only coordinate provided')
+      }
       
       //get directions
-      if(match[1]){
+      if(match[1]) {
         latdir = match[1];
         lngdir = match[5];
-      } else if (match[4]){
+      } 
+      else if (match[4]) {
         latdir = match[4];
         lngdir = match[8];
       }
@@ -58,25 +70,41 @@ function converter(coordsString, decimalPlaces) {
     match = dms_periods.exec(coordsString);
     matchSuccess = checkMatch(match);
     if (matchSuccess){
+
       ddLat = Math.abs(parseInt(match[2]));
-      if (match[4])
+
+      if (match[4]) {
         ddLat += match[4]/60;
-      if (match[6])
+      }
+        
+      if (match[6]){
         ddLat += match[6]/3600;
-      if (parseInt(match[2]) < 0) //needed to 
+      }
+  
+      if (parseInt(match[2]) < 0) {
         ddLat = -1 * ddLat;
+      }
+        
       ddLng = Math.abs(parseInt(match[9]));
-      if (match[11])
+
+      if (match[11]) {
         ddLng += match[11]/60;
-      if (match[13])
+      }
+        
+      if (match[13]) {
         ddLng += match[13]/3600;
-      if (parseInt(match[9]) < 0) //needed to 
+      }
+        
+      if (parseInt(match[9]) < 0) {
         ddLng = -1 * ddLng;
-      
-      if(match[1]){
+      }
+        
+      //the compass directions
+      if(match[1]) {
         latdir = match[1];
         lngdir = match[8];
-      } else if (match[7]){
+      } 
+      else if (match[7]) {
         latdir = match[7];
         lngdir = match[14];
       }
@@ -89,39 +117,52 @@ function converter(coordsString, decimalPlaces) {
   else if (dms_abbr.test(coordsString)) {
     match = dms_abbr.exec(coordsString);
     matchSuccess = checkMatch(match);
-    if (matchSuccess){
+
+    if (matchSuccess) {
       ddLat = Math.abs(parseInt(match[2]));
-      if (match[4]){
+      if (match[4]) {
         ddLat += match[4]/60;
-        if(!match[3])
+        if(!match[3]) {
           match[3] = ' ';
+        }
       }
+
       if (match[6]) {
         ddLat += match[6]/3600;
-        if(!match[5])
+        if(!match[5]) {
           match[5] = ' ';
+        }
       }
-      if (parseInt(match[2]) < 0) 
+
+      if (parseInt(match[2]) < 0) {
         ddLat = -1 * ddLat;
-      ddLng = Math.abs(parseInt(match[10]));
-      if (match[12]){
-        ddLng += match[12]/60;
-        if(!match[11])
-          match[11] = ' ';
       }
-      if (match[14]){
-        ddLng += match[14]/3600;
-        if(!match[13])
-          match[13] = ' ';
-      }
-      if (parseInt(match[10]) < 0)  
-        ddLng = -1 * ddLng;
         
-      if(match[1]){
+      ddLng = Math.abs(parseInt(match[10]));
+
+      if (match[12]) {
+        ddLng += match[12]/60;
+        if(!match[11]) {
+          match[11] = ' ';
+        }
+      }
+
+      if (match[14]) {
+        ddLng += match[14]/3600;
+        if(!match[13]) {
+          match[13] = ' ';
+        }
+      }
+
+      if (parseInt(match[10]) < 0) {
+        ddLng = -1 * ddLng;
+      }
+        
+      if(match[1]) {
         latdir = match[1];
         lngdir = match[9];
       } 
-      else if (match[8]){
+      else if (match[8]) {
         latdir = match[8];
         lngdir = match[16];
       }
@@ -134,39 +175,50 @@ function converter(coordsString, decimalPlaces) {
   else if (coords_other.test(coordsString)) {
     match = coords_other.exec(coordsString);
     matchSuccess = checkMatch(match);
-    if (matchSuccess){
+
+    if (matchSuccess) {
       ddLat = Math.abs(parseInt(match[2]));
       if (match[4]){
         ddLat += match[4]/60;
-        if(!match[3])
+        if(!match[3]) {
           match[3] = ' ';
+        }
       }
+
       if (match[6]) {
         ddLat += match[6]/3600;
-        if(!match[5])
+        if(!match[5]) {
           match[5] = ' ';
+        }
       }
-      if (parseInt(match[2]) < 0) 
+
+      if (parseInt(match[2]) < 0) {
         ddLat = -1 * ddLat;
+      }
         
       ddLng = Math.abs(parseInt(match[10]));
-      if (match[12]){
+      if (match[12]) {
         ddLng += match[12]/60;
-        if(!match[11])
+        if(!match[11]) {
           match[11] = ' ';
+        }
       }
-      if (match[14]){
+
+      if (match[14]) {
         ddLng += match[14]/3600;
-        if(!match[13])
+        if(!match[13]) {
           match[13] = ' ';
+        }
       }
-      if (parseInt(match[10]) < 0) 
+
+      if (parseInt(match[10]) < 0) {
         ddLng = -1 * ddLng;
-      
-      if(match[1]){
+      }
+        
+      if(match[1]) {
         latdir = match[1];
         lngdir = match[9];
-      } else if (match[8]){
+      } else if (match[8]) {
         latdir = match[8];
         lngdir = match[16];
       }
@@ -177,22 +229,14 @@ function converter(coordsString, decimalPlaces) {
     }
   }
 
-  if (ddLat == 0.0 || ddLng == 0.0) {
-    throw new Error('zero coordinate/s provided')
-  }
-
-  //some more validation: no zero coords or degrees only
-  if (Number(Math.round(ddLat)) == Number(ddLat)) {
-    throw new Error('degree only coordinate provided')
-  }
-
-  if (Number(Math.round(ddLng)) == Number(ddLng)) {
-    throw new Error('degree only coordinate provided')
-  }
-
   //check longitude value - it can be wrong!
-  if (Math.abs(ddLng) >=180) {
+  if (Math.abs(ddLng) >= 180) {
     throw new Error("invalid longitude value")				
+  }
+
+  //just to be safe check latitude also...
+  if (Math.abs(ddLng) >= 90) {
+    throw new Error("invalid latitude value")				
   }
   
   if (matchSuccess){

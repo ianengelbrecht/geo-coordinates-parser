@@ -225,7 +225,14 @@ var coordsRegexFormats = [
     verbatimLongitude: '-74.123256',
     decimalLatitude: 40.123256, 
     decimalLongitude: -74.123256 
-  }  
+  },
+  {
+    verbatimCoordinates: '18°24S 22°45E', //this is read as degrees and minutes
+    verbatimLatitude: '18°24S', 
+    verbatimLongitude: '22°45E', 
+    decimalLatitude: -18.4,
+    decimalLongitude: 22.75
+  } 
 ]
 
 var otherFormats = [
