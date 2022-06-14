@@ -359,20 +359,24 @@ function checkMatch(match) { //test if the matched groups arrays are 'balanced'.
   }
 
   //regex for testing corresponding values match
-  var numerictest = /^[-+]?\d+([\.,]{}\d+)?$/; //for testing numeric values
-  var stringtest = /[A-Za-z]+/; //for testing string values (north, south, etc)
+  var numerictest = /^[-+]?\d+([\.,]{1}\d+)?$/; //for testing numeric values
+  var stringtest = /[eastsouthnorthwest]+/i; //for testing string values (north, south, etc)
   
   
   var halflen = filteredMatch.length/2;
-  var result = true;
   for (var i = 0; i < halflen; i++) {
-    if (numerictest.test(filteredMatch[i]) != numerictest.test(filteredMatch[i + halflen]) || stringtest.test(filteredMatch[i]) != stringtest.test(filteredMatch[i + halflen])) {
-      result = false;
-      break;
+    const leftside = filteredMatch[i]
+    const rightside = filteredMatch[i + halflen]
+    if ((numerictest.test(leftside) && numerictest.test(rightside)) || (stringtest.test(leftside) && stringtest.test(rightside)) || leftside == rightside) {
+      continue;
+    }
+    else {
+      return false
     }
   }
   
-  return result;
+  return true;
+  
 }
 
 //functions for coordinate validation
