@@ -235,7 +235,7 @@ function converter(coordsString, decimalPlaces) {
   }
 
   //just to be safe check latitude also...
-  if (Math.abs(ddLng) >= 90) {
+  if (Math.abs(ddLat) >= 90) {
     throw new Error("invalid latitude value")				
   }
   
@@ -376,7 +376,7 @@ function checkMatch(match) { //test if the matched groups arrays are 'balanced'.
   }
   
   return true;
-
+  
 }
 
 //functions for coordinate validation
