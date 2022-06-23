@@ -252,6 +252,13 @@
     "decimalLongitude": -74.123256
   },
   {
+    "verbatimCoordinates": "18°24S 22°45E",
+    "verbatimLatitude": "18°24S",
+    "verbatimLongitude": "22°45E",
+    "decimalLatitude": -18.4,
+    "decimalLongitude": 22.75
+  },
+  {
     "verbatimCoordinates": "18.24S 22.45E",
     "verbatimLatitude": "18.24S",
     "verbatimLongitude": "22.45E",
@@ -299,5 +306,12 @@
     "verbatimLongitude": "23,07771° E",
     "decimalLatitude": -27.71372,
     "decimalLongitude": 23.07771
+  },
+  {
+    "verbatimCoordinates": "27.45.34 S 23.23.23 E",
+    "verbatimLatitude": "27.45.34 S",
+    "verbatimLongitude": "23.23.23 E",
+    "decimalLatitude": -27.759444,
+    "decimalLongitude": 23.38972222
   }
 ]
