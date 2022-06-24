@@ -1,4 +1,5 @@
 //function for converting coordinates from a string to decimal and verbatim
+//this is just a comment
 
 const toCoordinateFormat = require('./toCoordinateFormat.js')
 
