@@ -104,6 +104,13 @@ var coordsParserFormats = [
     decimalLongitude: -74.12305555555555
   },
   {
+    verbatimCoordinates: '40°7’23"S 74°7’23"E',
+    verbatimLatitude: '40°7’23"S', 
+    verbatimLongitude: '74°7’23"E',
+    decimalLatitude: -40.1230555555,
+    decimalLongitude: 74.12305555555555
+  },
+  {
     verbatimCoordinates: '40°7’23" -74°7’23"',
     verbatimLatitude: '40°7’23"', 
     verbatimLongitude: '-74°7’23"',
@@ -270,6 +277,13 @@ var otherFormats = [
     verbatimCoordinates: '27.15.45S 18.32.53E',
     verbatimLatitude: '27.15.45S', 
     verbatimLongitude: '18.32.53E',
+    decimalLatitude: -27.2625,
+    decimalLongitude: 18.548055
+  },
+  {
+    verbatimCoordinates: '-27.15.45 18.32.53',
+    verbatimLatitude: '-27.15.45', 
+    verbatimLongitude: '18.32.53',
     decimalLatitude: -27.2625,
     decimalLongitude: 18.548055
   }, 
