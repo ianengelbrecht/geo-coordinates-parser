@@ -274,6 +274,20 @@ var otherFormats = [
     decimalLongitude: 18.548055
   }, 
   {
+    verbatimCoordinates: '27.15.45.2S 18.32.53.4E',
+    verbatimLatitude: '27.15.45.2S', 
+    verbatimLongitude: '18.32.53.4E',
+    decimalLatitude: -27.262556,
+    decimalLongitude: 18.548167
+  }, 
+  {
+    verbatimCoordinates: '27.15.45,2S 18.32.53,4E',
+    verbatimLatitude: '27.15.45,2S', 
+    verbatimLongitude: '18.32.53,4E',
+    decimalLatitude: -27.262556,
+    decimalLongitude: 18.548167
+  }, 
+  {
     verbatimCoordinates: 'S23.43563 °  E22.45634 °', //decimals with spaces before the symbol!!
     verbatimLatitude: 'S23.43563 °', 
     verbatimLongitude: 'E22.45634 °',

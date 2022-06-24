@@ -78,7 +78,7 @@ function converter(coordsString, decimalPlaces) {
       }
         
       if (match[6]){
-        ddLat += match[6]/3600;
+        ddLat += match[6].replace(',', '.')/3600;
       }
   
       if (parseInt(match[2]) < 0) {
@@ -92,7 +92,7 @@ function converter(coordsString, decimalPlaces) {
       }
         
       if (match[13]) {
-        ddLng += match[13]/3600;
+        ddLng += match[13].replace(',', '.')/3600;
       }
         
       if (parseInt(match[9]) < 0) {
@@ -119,7 +119,7 @@ function converter(coordsString, decimalPlaces) {
 
     }
     else {
-      throw new Error("invalid DMS coordinates format")				
+      throw new Error("invalid DMS coordinates format")
     }
   }
   else if (dms_abbr.test(coordsString)) {
@@ -422,7 +422,7 @@ function coordsCloseEnough(coordsToTest) {
 var dd_re = /(NORTH|SOUTH|[NS])?[\s]*([+-]?[0-8]?[0-9](?:[\.,]\d{3,}))[\s]*([•º°]?)[\s]*(NORTH|SOUTH|[NS])?[\s]*[,/;]?[\s]*(EAST|WEST|[EW])?[\s]*([+-]?[0-1]?[0-9]?[0-9](?:[\.,]\d{3,}))[\s]*([•º°]?)[\s]*(EAST|WEST|[EW])?/i;
 
 //degrees minutes seconds with '.' as separator - gives array with 15 values
-var dms_periods = /(NORTH|SOUTH|[NS])?\s*([+-]?[0-8]?[0-9])\s*(\.)\s*([0-5]?[0-9])\s*(\.)?\s*((?:[0-5]?[0-9])(?:\.\d{1,3})?)?\s*(NORTH|SOUTH|[NS])?(?:\s*[,/;]\s*|\s*)(EAST|WEST|[EW])?\s*([+-]?[0-1]?[0-9]?[0-9])\s*(\.)\s*([0-5]?[0-9])\s*(\.)?\s*((?:[0-5]?[0-9])(?:\.\d{1,3})?)?\s*(EAST|WEST|[EW])?/i;
+var dms_periods = /(NORTH|SOUTH|[NS])?\s*([+-]?[0-8]?[0-9])\s*(\.)\s*([0-5]?[0-9])\s*(\.)?\s*((?:[0-5]?[0-9])(?:[\.,]{1}\d{1,3})?)?\s*(NORTH|SOUTH|[NS])?(?:\s*[,/;]\s*|\s*)(EAST|WEST|[EW])?\s*([+-]?[0-1]?[0-9]?[0-9])\s*(\.)\s*([0-5]?[0-9])\s*(\.)?\s*((?:[0-5]?[0-9])(?:[\.,]\d{1,3})?)?\s*(EAST|WEST|[EW])?/i;
 
 //degrees minutes seconds with words 'degrees, minutes, seconds' as separators (needed because the s of seconds messes with the S of SOUTH) - gives array of 17 values
 var dms_abbr = /(NORTH|SOUTH|[NS])?[\ \t]*([+-]?[0-8]?[0-9])[\ \t]*(D(?:EG)?(?:REES)?)[\ \t]*([0-5]?[0-9])[\ \t]*(M(?:IN)?(?:UTES)?)[\ \t]*((?:[0-5]?[0-9])(?:\.\d{1,3})?)?(S(?:EC)?(?:ONDS)?)?[\ \t]*(NORTH|SOUTH|[NS])?(?:[\ \t]*[,/;][\ \t]*|[\ \t]*)(EAST|WEST|[EW])?[\ \t]*([+-]?[0-1]?[0-9]?[0-9])[\ \t]*(D(?:EG)?(?:REES)?)[\ \t]*([0-5]?[0-9])[\ \t]*(M(?:IN)?(?:UTES)?)[\ \t]*((?:[0-5]?[0-9])(?:\.\d{1,3})?)?(S(?:EC)?(?:ONDS)?)[\ \t]*(EAST|WEST|[EW])?/i;
