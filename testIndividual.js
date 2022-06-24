@@ -1,5 +1,5 @@
 const convert = require('./converter')
-const test = '27.45.34 S 23.23.23 E'
+const test = 'S 27.45.34 S 23.23.23'
 
 try{
   let converted = convert(test)
