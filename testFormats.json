@@ -133,6 +133,13 @@
     "decimalLongitude": -74.12305555555555
   },
   {
+    "verbatimCoordinates": "40°7’23\"S 74°7’23\"E",
+    "verbatimLatitude": "40°7’23\"S",
+    "verbatimLongitude": "74°7’23\"E",
+    "decimalLatitude": -40.1230555555,
+    "decimalLongitude": 74.12305555555555
+  },
+  {
     "verbatimCoordinates": "40°7’23\" -74°7’23\"",
     "verbatimLatitude": "40°7’23\"",
     "verbatimLongitude": "-74°7’23\"",
