@@ -15,7 +15,7 @@ function converter(coordsString, decimalPlaces) {
     decimalPlaces = 5
   }
 
-  coordsString = coordsString.replace(/\s\s+/g, ' ').trim(); //just to tidy up whitespaces
+  coordsString = coordsString.replace(/\s+/g, ' ').trim(); //just to tidy up whitespaces
 
   var ddLat = null;
   var ddLng = null; 
@@ -107,16 +107,7 @@ function converter(coordsString, decimalPlaces) {
       else if (match[7]) {
         latdir = match[7];
         lngdir = match[14];
-      }
-      else { //we have to catch an edge case where we have no direction indicators
-        throw new Error("invalid DMS coordinates format")	
-      }
-
-      //we have to catch another edge case here, same or missing direction indicators
-      if(!latdir || !lngdir) {
-        throw new Error("invalid DMS coordinates format")	
-      }
-
+      }  
     }
     else {
       throw new Error("invalid DMS coordinates format")
@@ -237,18 +228,30 @@ function converter(coordsString, decimalPlaces) {
     }
   }
 
-  //check longitude value - it can be wrong!
-  if (Math.abs(ddLng) >= 180) {
-    throw new Error("invalid longitude value")				
-  }
-
-  //just to be safe check latitude also...
-  if (Math.abs(ddLat) >= 90) {
-    throw new Error("invalid latitude value")				
-  }
-  
   if (matchSuccess){
-    
+
+    //more validation....
+
+      //check longitude value - it can be wrong!
+      if (Math.abs(ddLng) >= 180) {
+        throw new Error("invalid longitude value")				
+      }
+
+      //just to be safe check latitude also...
+      if (Math.abs(ddLat) >= 90) {
+        throw new Error("invalid latitude value")				
+      }
+
+    //if we have one direction we must have the other
+    if((latdir || lngdir) && (!latdir || !lngdir)) {
+      throw new Error("invalid coordinates format")	
+    }
+
+    //the directions can't be the same
+    if(latdir && latdir == lngdir) {
+      throw new Error("invalid coordinates format")	
+    }
+
     //make sure the signs and cardinal directions match
     var patt = /S|SOUTH/i;
     if (patt.test(latdir)) {
@@ -367,7 +370,7 @@ function checkMatch(match) { //test if the matched groups arrays are 'balanced'.
   }
 
   //regex for testing corresponding values match
-  var numerictest = /^[-+]?\d+([\.,]{1}\d+)?$/; //for testing numeric values
+  var numerictest = /^[-+]?\d+([\.,]\d+)?$/; //for testing numeric values
   var stringtest = /[eastsouthnorthwest]+/i; //for testing string values (north, south, etc)
   
   
@@ -422,13 +425,13 @@ function coordsCloseEnough(coordsToTest) {
 var dd_re = /(NORTH|SOUTH|[NS])?[\s]*([+-]?[0-8]?[0-9](?:[\.,]\d{3,}))[\s]*([•º°]?)[\s]*(NORTH|SOUTH|[NS])?[\s]*[,/;]?[\s]*(EAST|WEST|[EW])?[\s]*([+-]?[0-1]?[0-9]?[0-9](?:[\.,]\d{3,}))[\s]*([•º°]?)[\s]*(EAST|WEST|[EW])?/i;
 
 //degrees minutes seconds with '.' as separator - gives array with 15 values
-var dms_periods = /(NORTH|SOUTH|[NS])?\s*([+-]?[0-8]?[0-9])\s*(\.)\s*([0-5]?[0-9])\s*(\.)?\s*((?:[0-5]?[0-9])(?:[\.,]{1}\d{1,3})?)?\s*(NORTH|SOUTH|[NS])?(?:\s*[,/;]\s*|\s*)(EAST|WEST|[EW])?\s*([+-]?[0-1]?[0-9]?[0-9])\s*(\.)\s*([0-5]?[0-9])\s*(\.)?\s*((?:[0-5]?[0-9])(?:[\.,]\d{1,3})?)?\s*(EAST|WEST|[EW])?/i;
+var dms_periods = /(NORTH|SOUTH|[NS])?\s*([+-]?[0-8]?[0-9])\s*(\.)\s*([0-5]?[0-9])\s*(\.)\s*((?:[0-5]?[0-9])(?:[\.,]\d{1,3})?)?\s*(NORTH|SOUTH|[NS])?(?:\s*[,/;]\s*|\s*)(EAST|WEST|[EW])?\s*([+-]?[0-1]?[0-9]?[0-9])\s*(\.)\s*([0-5]?[0-9])\s*(\.)\s*((?:[0-5]?[0-9])(?:[\.,]\d{1,3})?)?\s*(EAST|WEST|[EW])?/i;
 
 //degrees minutes seconds with words 'degrees, minutes, seconds' as separators (needed because the s of seconds messes with the S of SOUTH) - gives array of 17 values
-var dms_abbr = /(NORTH|SOUTH|[NS])?[\ \t]*([+-]?[0-8]?[0-9])[\ \t]*(D(?:EG)?(?:REES)?)[\ \t]*([0-5]?[0-9])[\ \t]*(M(?:IN)?(?:UTES)?)[\ \t]*((?:[0-5]?[0-9])(?:\.\d{1,3})?)?(S(?:EC)?(?:ONDS)?)?[\ \t]*(NORTH|SOUTH|[NS])?(?:[\ \t]*[,/;][\ \t]*|[\ \t]*)(EAST|WEST|[EW])?[\ \t]*([+-]?[0-1]?[0-9]?[0-9])[\ \t]*(D(?:EG)?(?:REES)?)[\ \t]*([0-5]?[0-9])[\ \t]*(M(?:IN)?(?:UTES)?)[\ \t]*((?:[0-5]?[0-9])(?:\.\d{1,3})?)?(S(?:EC)?(?:ONDS)?)[\ \t]*(EAST|WEST|[EW])?/i;
+var dms_abbr = /(NORTH|SOUTH|[NS])?\s*([+-]?[0-8]?[0-9])\s*(D(?:EG)?(?:REES)?)\s*([0-5]?[0-9])\s*(M(?:IN)?(?:UTES)?)\s*((?:[0-5]?[0-9])(?:[\.,]\d{1,3})?)?(S(?:EC)?(?:ONDS)?)?\s*(NORTH|SOUTH|[NS])?(?:\s*[,/;]\s*|\s*)(EAST|WEST|[EW])?\s*([+-]?[0-1]?[0-9]?[0-9])\s*(D(?:EG)?(?:REES)?)\s*([0-5]?[0-9])\s*(M(?:IN)?(?:UTES)?)\s*((?:[0-5]?[0-9])(?:[\.,]\d{1,3})?)?(S(?:EC)?(?:ONDS)?)\s*(EAST|WEST|[EW])?/i;
 
 //everything else - gives array of 17 values 
-var coords_other = /(NORTH|SOUTH|[NS])?[\ \t]*([+-]?[0-8]?[0-9])[\ \t]*([•º°\.:]|D(?:EG)?(?:REES)?)?[\ \t]*,?([0-5]?[0-9](?:\.\d{1,})?)?[\ \t]*(['′´’\.:]|M(?:IN)?(?:UTES)?)?[\ \t]*,?((?:[0-5]?[0-9])(?:\.\d{1,3})?)?[\ \t]*(''|′′|’’|´´|["″”\.])?[\ \t]*(NORTH|SOUTH|[NS])?(?:\s*[,/;]\s*|\s*)(EAST|WEST|[EW])?[\ \t]*([+-]?[0-1]?[0-9]?[0-9])[\ \t]*([•º°\.:]|D(?:EG)?(?:REES)?)?[\ \t]*,?([0-5]?[0-9](?:\.\d{1,})?)?[\ \t]*(['′´’\.:]|M(?:IN)?(?:UTES)?)?[\ \t]*,?((?:[0-5]?[0-9])(?:\.\d{1,3})?)?[\ \t]*(''|′′|´´|’’|["″”\.])?[\ \t]*(EAST|WEST|[EW])?/i;
+var coords_other = /(NORTH|SOUTH|[NS])?\s*([+-]?[0-8]?[0-9])\s*([•º°\.:]|D(?:EG)?(?:REES)?)?\s*,?([0-5]?[0-9](?:[\.,]\d{1,})?)?\s*(['′´’\.:]|M(?:IN)?(?:UTES)?)?\s*,?((?:[0-5]?[0-9])(?:[\.,]\d{1,3})?)?\s*(''|′′|’’|´´|["″”\.])?\s*(NORTH|SOUTH|[NS])?(?:\s*[,/;]\s*|\s*)(EAST|WEST|[EW])?\s*([+-]?[0-1]?[0-9]?[0-9])\s*([•º°\.:]|D(?:EG)?(?:REES)?)?\s*,?([0-5]?[0-9](?:[\.,]\d{1,})?)?\s*(['′´’\.:]|M(?:IN)?(?:UTES)?)?\s*,?((?:[0-5]?[0-9])(?:[\.,]\d{1,3})?)?\s*(''|′′|´´|’’|["″”\.])?\s*(EAST|WEST|[EW])?/i;
 
 const to = Object.freeze({
   DMS: 'DMS',
