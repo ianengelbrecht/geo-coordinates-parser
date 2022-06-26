@@ -122,16 +122,10 @@ function converter(coordsString, decimalPlaces) {
       ddLat = Math.abs(parseInt(match[2]));
       if (match[4]) {
         ddLat += match[4]/60;
-        if(!match[3]) {
-          match[3] = ' ';
-        }
       }
 
       if (match[6]) {
         ddLat += match[6]/3600;
-        if(!match[5]) {
-          match[5] = ' ';
-        }
       }
 
       if (parseInt(match[2]) < 0) {
@@ -142,16 +136,10 @@ function converter(coordsString, decimalPlaces) {
 
       if (match[12]) {
         ddLng += match[12]/60;
-        if(!match[11]) {
-          match[11] = ' ';
-        }
       }
 
       if (match[14]) {
         ddLng += match[14]/3600;
-        if(!match[13]) {
-          match[13] = ' ';
-        }
       }
 
       if (parseInt(match[10]) < 0) {
@@ -180,16 +168,10 @@ function converter(coordsString, decimalPlaces) {
       ddLat = Math.abs(parseInt(match[2]));
       if (match[4]){
         ddLat += match[4]/60;
-        if(!match[3]) {
-          match[3] = ' ';
-        }
       }
 
       if (match[6]) {
         ddLat += match[6]/3600;
-        if(!match[5]) {
-          match[5] = ' ';
-        }
       }
 
       if (parseInt(match[2]) < 0) {
@@ -199,16 +181,10 @@ function converter(coordsString, decimalPlaces) {
       ddLng = Math.abs(parseInt(match[10]));
       if (match[12]) {
         ddLng += match[12]/60;
-        if(!match[11]) {
-          match[11] = ' ';
-        }
       }
 
       if (match[14]) {
         ddLng += match[14]/3600;
-        if(!match[13]) {
-          match[13] = ' ';
-        }
       }
 
       if (parseInt(match[10]) < 0) {
