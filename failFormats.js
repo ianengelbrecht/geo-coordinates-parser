@@ -1,6 +1,13 @@
 //TODO These formats should throw...
 
 const failingFormats = [
+  '10,10',
+  '46,8',
+  '12.12323, 123',
+  '24.0, 26.0',
+  '27.0 23.0', //same as above but different values
+  '10.00000S 10.000000E', //integer values only
+  '00.00 01.00', //DM, but no directions
   '50°4\'17.698"south, 24.34532', //different formats on each side
   '90°4\'17.698"south, 23°4\'17.698"east', //latitude out of bounds
   '89°4\'17.698"south, 183°4\'17.698"east', //longitude out of bounds

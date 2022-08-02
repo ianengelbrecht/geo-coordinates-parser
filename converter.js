@@ -1,6 +1,8 @@
 //function for converting coordinates from a string to decimal and verbatim
 //this is just a comment
 
+const { dd_re, dms_periods, dms_abbr, coords_other } = require('./regex.js')
+
 const toCoordinateFormat = require('./toCoordinateFormat.js')
 
 /**
@@ -44,11 +46,11 @@ function converter(coordsString, decimalPlaces) {
 
       //some more validation: no zero coords or degrees only
       if (Number(Math.round(ddLat)) == Number(ddLat)) {
-        throw new Error('degree only coordinate provided')
+        throw new Error('integer only coordinate provided')
       }
 
       if (Number(Math.round(ddLng)) == Number(ddLng)) {
-        throw new Error('degree only coordinate provided')
+        throw new Error('integer only coordinate provided')
       }
       
       //get directions
@@ -198,7 +200,7 @@ function converter(coordsString, decimalPlaces) {
         latdir = match[8];
         lngdir = match[16];
       }
-
+      
     }
     else {
       throw new Error("invalid coordinates format")				
@@ -296,7 +298,32 @@ function converter(coordsString, decimalPlaces) {
       }
 
     }
+
+    //validation again...
+
+    //we only allow zeros after the period if its DM
+    const splitLat = verbatimLat.split('.')
+    if(splitLat.length == 2) {
+      if(splitLat[1] == 0 && splitLat[1].length != 2){
+        throw new Error('invalid coordinates format')
+      }
+    }
+
+    const splitLon = verbatimLng.split('.')
+    if(splitLon.length == 2) {
+      if(splitLon[1] == 0 && splitLon[1].length != 2){
+        throw new Error('invalid coordinates format')
+      }
+    }
+
+    //no integer coords allowed
+    //validation -- no integer coords
+    if(/^\d+$/.test(verbatimLat) || /^\d+$/.test(verbatimLng)) {
+      throw new Error('degree only coordinate/s provided')
+    }
     
+
+    //some tidying up...
     if(isNaN(ddLat) && ddLat.includes(',')) {
       ddLat = ddLat.replace(',', '.')
     }
@@ -335,7 +362,8 @@ function checkMatch(match) { //test if the matched groups arrays are 'balanced'.
   }
 
   //first remove the empty values from the array
-  var filteredMatch = match.filter(x=>x);
+  //var filteredMatch = match.filter(x=>x);
+  var filteredMatch = [...match]
   
   //we need to shift the array because it contains the whole coordinates string in the first item
   filteredMatch.shift();
@@ -354,7 +382,16 @@ function checkMatch(match) { //test if the matched groups arrays are 'balanced'.
   for (var i = 0; i < halflen; i++) {
     const leftside = filteredMatch[i]
     const rightside = filteredMatch[i + halflen]
-    if ((numerictest.test(leftside) && numerictest.test(rightside)) || (stringtest.test(leftside) && stringtest.test(rightside)) || leftside == rightside) {
+    const bothAreNumbers = numerictest.test(leftside) && numerictest.test(rightside)
+    const bothAreStrings = stringtest.test(leftside) && stringtest.test(rightside)
+    const valuesAreEqual = leftside == rightside
+    if (leftside == undefined && rightside == undefined) { //we have to handle undefined because regex converts it to string 'undefined'!!
+      continue
+    }
+    else if (leftside == undefined || rightside == undefined) { //no we need to handle the case where one is and the other not...
+      return false
+    }
+    else if (bothAreNumbers || bothAreStrings || valuesAreEqual) {
       continue;
     }
     else {
@@ -395,19 +432,6 @@ function coordsCloseEnough(coordsToTest) {
   }
 }
 
-//Coordinates pattern matching regex
-
-//decimal degrees
-var dd_re = /(NORTH|SOUTH|[NS])?[\s]*([+-]?[0-8]?[0-9](?:[\.,]\d{3,}))[\s]*([•º°]?)[\s]*(NORTH|SOUTH|[NS])?[\s]*[,/;]?[\s]*(EAST|WEST|[EW])?[\s]*([+-]?[0-1]?[0-9]?[0-9](?:[\.,]\d{3,}))[\s]*([•º°]?)[\s]*(EAST|WEST|[EW])?/i;
-
-//degrees minutes seconds with '.' as separator - gives array with 15 values
-var dms_periods = /(NORTH|SOUTH|[NS])?\s*([+-]?[0-8]?[0-9])\s*(\.)\s*([0-5]?[0-9])\s*(\.)\s*((?:[0-5]?[0-9])(?:[\.,]\d{1,3})?)?\s*(NORTH|SOUTH|[NS])?(?:\s*[,/;]\s*|\s*)(EAST|WEST|[EW])?\s*([+-]?[0-1]?[0-9]?[0-9])\s*(\.)\s*([0-5]?[0-9])\s*(\.)\s*((?:[0-5]?[0-9])(?:[\.,]\d{1,3})?)?\s*(EAST|WEST|[EW])?/i;
-
-//degrees minutes seconds with words 'degrees, minutes, seconds' as separators (needed because the s of seconds messes with the S of SOUTH) - gives array of 17 values
-var dms_abbr = /(NORTH|SOUTH|[NS])?\s*([+-]?[0-8]?[0-9])\s*(D(?:EG)?(?:REES)?)\s*([0-5]?[0-9])\s*(M(?:IN)?(?:UTES)?)\s*((?:[0-5]?[0-9])(?:[\.,]\d{1,3})?)?\s*(S(?:EC)?(?:ONDS)?)?\s*(NORTH|SOUTH|[NS])?(?:\s*[,/;]\s*|\s*)(EAST|WEST|[EW])?\s*([+-]?[0-1]?[0-9]?[0-9])\s*(D(?:EG)?(?:REES)?)\s*([0-5]?[0-9])\s*(M(?:IN)?(?:UTES)?)\s*((?:[0-5]?[0-9])(?:[\.,]\d{1,3})?)?\s*(S(?:EC)?(?:ONDS)?)\s*(EAST|WEST|[EW])?/i;
-
-//everything else - gives array of 17 values 
-var coords_other = /(NORTH|SOUTH|[NS])?\s*([+-]?[0-8]?[0-9])\s*([•º°\.:]|D(?:EG)?(?:REES)?)?\s*,?([0-5]?[0-9](?:[\.,]\d{1,})?)?\s*(['′´’\.:]|M(?:IN)?(?:UTES)?)?\s*,?((?:[0-5]?[0-9])(?:[\.,]\d{1,3})?)?\s*(''|′′|’’|´´|["″”\.])?\s*(NORTH|SOUTH|[NS])?(?:\s*[,/;]\s*|\s*)(EAST|WEST|[EW])?\s*([+-]?[0-1]?[0-9]?[0-9])\s*([•º°\.:]|D(?:EG)?(?:REES)?)?\s*,?([0-5]?[0-9](?:[\.,]\d{1,})?)?\s*(['′´’\.:]|M(?:IN)?(?:UTES)?)?\s*,?((?:[0-5]?[0-9])(?:[\.,]\d{1,3})?)?\s*(''|′′|´´|’’|["″”\.])?\s*(EAST|WEST|[EW])?/i;
 
 const to = Object.freeze({
   DMS: 'DMS',

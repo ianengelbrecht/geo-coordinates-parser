@@ -1,5 +1,6 @@
 const convert = require('./converter')
-const test = '27.45.34 S S 23.23.23'
+const test = '10,11'
+//const test = '00.00, 01.00'
 
 try{
   let converted = convert(test)

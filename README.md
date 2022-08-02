@@ -71,9 +71,10 @@ Formats used for testing can be be accessed with:
 convert.formats
 ```
 
-**<span style="color:red">Please add coordinate formats that throw an error in the Github Issues.</span>**
+**Please add coordinate formats that throw an error in the Github Issues.**
 
-**<span style="color:red">Note that formats like 24.56S 26.48E are treated as degrees and minutes! And 24.0, 26.0 is treated as an error. If you don't want this behaviour you need to catch these cases with your own code before you use convert.</span>**
+**CAUTION!!!**
+**Coordinates like '24.56S 26.48E' are treated as degrees and minutes and '24, 26' or '24.0, 26.0' will throw an error. If you don't want this behaviour you need to catch these cases with your own code before you use convert.* *
 
 ### Want to use it in the browser?
 Add ```<script src="https://cdn.jsdelivr.net/npm/geo-coordinates-parser/bundle/geocoordsparser.js"></script>```

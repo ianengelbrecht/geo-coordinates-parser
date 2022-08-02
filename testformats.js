@@ -245,6 +245,27 @@ var coordsRegexFormats = [
 var otherFormats = [
   // additional formats we've encountered
   {
+    verbatimCoordinates: '10.432342S 10.6345345E', //this is read as degrees and minutes
+    verbatimLatitude: '10.432342S', 
+    verbatimLongitude: '10.6345345E', 
+    decimalLatitude: -10.432342,
+    decimalLongitude: 10.6345345
+  },
+  {
+    verbatimCoordinates: '10.00S 10.00E', //this is read as degrees and minutes
+    verbatimLatitude: '10.00S', 
+    verbatimLongitude: '10.00E', 
+    decimalLatitude: -10.00000,
+    decimalLongitude: 10.00000
+  },
+  {
+    verbatimCoordinates: '00.00S 01.00E', //this is read as degrees and minutes
+    verbatimLatitude: '00.00S', 
+    verbatimLongitude: '01.00E', 
+    decimalLatitude: 0.00000,
+    decimalLongitude: 1.00000
+  },
+  {
     verbatimCoordinates: '18.24S 22.45E', //this is read as degrees and minutes
     verbatimLatitude: '18.24S', 
     verbatimLongitude: '22.45E', 
