@@ -5,6 +5,7 @@ const failingFormats = [
   '46,8',
   '12.12323, 123',
   '24.0, 26.0',
+  '33.25°S 18.25°E', //the rule is that two digit decimals are interpreted as minutes, this format says they are degrees. 
   '27.0 23.0', //same as above but different values
   '10.00000S 10.000000E', //integer values only
   '00.00 01.00', //DM, but no directions
