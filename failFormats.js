@@ -19,7 +19,8 @@ const failingFormats = [
   'S 27.45.34 S 23.23.23', //invalid direction on right side
   'S 90°4\'17.698" S 23°4\'17.698"',
   '27.45.34 S S 23.23.23', //invalid direction on right side
-  '27.45.34  23.23.23 E' //no dir on one side
+  '27.45.34  23.23.23 E', //no dir on one side
+  '8°83S 35°67E '
 ]
 
 module.exports = failingFormats
