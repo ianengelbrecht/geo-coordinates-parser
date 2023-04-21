@@ -49,4 +49,4 @@ function convert(coordString, format, isLatitude) {
   return `${degrees}° ${minutes}' ${seconds}" ${direction}`;
 }
 
-module.exports = toCoordinateFormat
+export default toCoordinateFormat

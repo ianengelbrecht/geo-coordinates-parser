@@ -18,10 +18,10 @@
   
   <script>
     function convertCoords() {
-      var coordsString = document.getElementById("inputcoords").value.trim()
+      const coordsString = document.getElementById("inputcoords").value.trim()
       if(coordsString){
 
-        var converted = convert(coordsString)
+        const converted = convert(coordsString)
         document.getElementById("ddlat").textContent = converted.decimalLatitude
         document.getElementById("ddlng").textContent = converted.decimalLongitude
         document.getElementById("vlat").textContent = converted.verbatimLatitude

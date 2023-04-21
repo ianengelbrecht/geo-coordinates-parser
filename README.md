@@ -9,13 +9,14 @@ A Javascript function for reading a variety of coordinate formats and converting
 npm install geo-coordinates-parser
 ```
 
+# NOTE THAT USAGE CHANGED IN V1.6.0 TO BETTER SUPPORT ES6 AND COMMONJS
 ### Usage
 ```js
-const convert = require('geo-coordinates-parser');
+const { convert } = require('geo-coordinates-parser'); //CommonJS
 ```
 OR
 ```js
-import convert from 'geo-coordinates-parser' //ES6, if you're using a bundler
+import { convert } from 'geo-coordinates-parser' //ES6
 ```
 THEN
 ```js
@@ -78,7 +79,7 @@ convert.formats
 
 ### Want to use it in the browser?
 Add ```<script src="https://cdn.jsdelivr.net/npm/geo-coordinates-parser/bundle/geocoordsparser.js"></script>```
-to your html head and you'll have the ```convert``` function available globally. You won't have .formats, .closeEnough or .toCoordinateFormat though, only the coordinates conversion function.
+to your html head and you'll have the ```convert``` function available globally.
 
 ### Convert back to standard formats
 Sometimes we might want to convert back to more traditional formats for representing coordinates, such as DMS or DM. This can be useful for standardizing coordinates. The convert function has an enum to help.
@@ -91,4 +92,4 @@ converted.toCoordinateFormat(convert.to.DMS) /// '40° 26.771" N, 79° 56.932" W
 MIT Licence
 
 ### Acknowledgements
-Support for development was provided by the [Animal Demography Unit](http://adu.uct.ac.za) of the University of Cape Town, and the [Natural Science Collections Facility](http://nscf.co.za).
+Support for development was provided by the [Animal Demography Unit](http://adu.uct.ac.za) of the University of Cape Town, and the [Natural Science Collections Facility](http://nscf.co.za). CommonJS and ESM support was added following [https://www.sensedeep.com/blog/posts/2021/how-to-create-single-source-npm-module.html](https://www.sensedeep.com/blog/posts/2021/how-to-create-single-source-npm-module.html).

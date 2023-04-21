@@ -23,4 +23,4 @@ const failingFormats = [
   '8°83S 35°67E '
 ]
 
-module.exports = failingFormats
+export default failingFormats

@@ -1,5 +1,5 @@
-const fs = require('fs');
-const testFormats = require('./testformats')
+import fs from 'fs'
+import testFormats from './testformats.js'
 
 fs.writeFile("testFormats.json", JSON.stringify(testFormats, null, 2), 'utf8', function (err) {
   if (err) {
