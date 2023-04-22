@@ -9,7 +9,7 @@ A Javascript function for reading a variety of coordinate formats and converting
 npm install geo-coordinates-parser
 ```
 
-# NOTE THAT USAGE CHANGED IN V1.6.0 TO BETTER SUPPORT ES6 AND COMMONJS
+## NOTE THAT USAGE CHANGED IN V1.6.0 TO BETTER SUPPORT ES6 AND COMMONJS
 ### Usage
 ```js
 const { convert } = require('geo-coordinates-parser'); //CommonJS
