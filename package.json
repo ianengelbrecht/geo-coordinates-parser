@@ -43,8 +43,5 @@
   "bugs": {
     "url": "https://github.com/ianengelbrecht/geo-coordinates-parser/issues"
   },
-  "homepage": "https://github.com/ianengelbrecht/geo-coordinates-parser#readme",
-  "devDependencies": {
-    "tinyify": "^2.5.1"
-  }
+  "homepage": "https://github.com/ianengelbrecht/geo-coordinates-parser#readme"
 }
