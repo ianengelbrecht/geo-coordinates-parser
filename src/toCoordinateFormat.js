@@ -7,13 +7,28 @@
  */
 function toCoordinateFormat(format) {
 
-  if(!['DMS', 'DM'].includes(format)) throw new Error('invalid format specified')
+  if(!['DMS', 'DM', 'DD'].includes(format)) throw new Error('invalid format specified')
 
   if(this.decimalCoordinates && this.decimalCoordinates.trim()) {
-    const parts = this.decimalCoordinates.split(',').map(x => x.trim())
-    const convertedLat = convert(parts[0], format, true)
-    const convertedLong = convert(parts[1], format, false)
-    return `${convertedLat}, ${convertedLong}`
+
+    if(format == 'DD'){
+      return this.decimalCoordinates
+    }
+
+    const parts = this.decimalCoordinates.split(',').map(x => Number(x.trim()))
+    let convertedLat = convert(parts[0], format, true)
+    let convertedLong = convert(parts[1], format, false)
+
+    //some custom cleaning for DMS
+    if (convertedLat.endsWith('.0"') && convertedLong.endsWith('.0"')){
+      convertedLat = convertedLat.replace(/\.0"$/, '"')
+      convertedLong = convertedLong.replace(/\.0"$/, '"')
+    }
+
+    const latDirection = parts[0] >= 0 ? " N" : " S";
+    const longDirection = parts[1] >= 0 ? " E" : " W";
+
+    return `${convertedLat + latDirection}, ${convertedLong + longDirection}`
   }
   else {
     throw new Error('no decimal coordinates to convert')
@@ -21,17 +36,7 @@ function toCoordinateFormat(format) {
 }
 
 //assumes everything is valid...
-function convert(coordString, format, isLatitude) {
-
-  const coord = Number(coordString)
-
-  let direction
-  if (isLatitude) {
-    direction = coord >= 0 ? "N" : "S";
-  } 
-  else {
-    direction = coord >= 0 ? "E" : "W";
-  }
+function convert(coord, format) {
 
   const absolute = Math.abs(coord);
 
@@ -39,14 +44,21 @@ function convert(coordString, format, isLatitude) {
   const minutesNotTruncated = (absolute - degrees) * 60;
 
   if(format == 'DM') {
-    return `${degrees}° ${minutesNotTruncated.toFixed(3).replace(/\.0+$/, '')}' ${direction}`;
+    let dmMins = round(minutesNotTruncated, 3).toFixed(3).padStart(6, '0')
+    return `${degrees}° ${dmMins}'`;
   }
 
   //else
-  const minutes = Math.floor(minutesNotTruncated);
-  const seconds = ((minutesNotTruncated - minutes) * 60).toFixed(1).replace(/\.0$/, '');
+  let minutes = Math.floor(minutesNotTruncated)
+  let seconds = ((minutesNotTruncated - minutes) * 60).toFixed(1).padStart(4, '0');
+  minutes = minutes.toString().padStart(2, '0')
 
-  return `${degrees}° ${minutes}' ${seconds}" ${direction}`;
+  return `${degrees}° ${minutes}' ${seconds}"`;
+}
+
+function round(num, places) {
+  const d = Math.pow(10, places);
+  return Math.round((num + Number.EPSILON) * d) / d;
 }
 
 export default toCoordinateFormat

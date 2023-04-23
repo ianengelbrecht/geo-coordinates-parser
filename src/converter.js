@@ -434,7 +434,8 @@ function coordsCloseEnough(coordsToTest) {
 
 const to = Object.freeze({
   DMS: 'DMS',
-  DM: 'DM'
+  DM: 'DM',
+  DD: 'DD'
 })
 
 converter.to = to
