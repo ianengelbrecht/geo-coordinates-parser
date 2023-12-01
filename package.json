@@ -3,8 +3,8 @@
   "version": "1.6.3",
   "description": "A Javascript function for reading a variety of coordinate formats and converting to decimal numbers. Builds on other efforts by returning the verbatim coordinates and the decimal coordinates all in one object.",
   "type": "module",
-  "main": "merge.js",
-  "types": "merge.d.ts",
+  "main": "./dist/cjs/merge.js",
+  "types": "./dist/cjs/merge.d.ts",
   "exports": {
     ".": {
       "import": "./dist/mjs/merge.js",
