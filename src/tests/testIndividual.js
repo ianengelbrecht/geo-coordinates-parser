@@ -1,9 +1,9 @@
 import convert from '../converter.js'
 //const test = '26°44S 29°46E'
 //const test = '00.00, 01.00'
-const test = `8°83S 35°67E`
+const test = `26°05240'S, 27°51448'E`
 
-try{
+try {
   let converted = convert(test)
   console.log(converted)
   console.log(converted.toCoordinateFormat(convert.to.DM))
