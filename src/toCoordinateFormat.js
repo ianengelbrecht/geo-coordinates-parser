@@ -3,7 +3,8 @@
 
 /**
  * Converts decimalCoordinates to other formats commonly used
- * @param {*} format Either DMS or DM
+ * @param {string} format Either DMS or DM
+ * @returns {string}
  */
 function toCoordinateFormat(format) {
 
