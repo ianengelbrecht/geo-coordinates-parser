@@ -1,6 +1,6 @@
 {
   "name": "geo-coordinates-parser",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "description": "A Javascript function for reading a variety of coordinate formats and converting to decimal numbers. Builds on other efforts by returning the verbatim coordinates and the decimal coordinates all in one object.",
   "type": "module",
   "main": "./dist/cjs/merge.js",
@@ -12,6 +12,7 @@
     }
   },
   "scripts": {
+    "prepack": "npm run build",
     "build": "rd /s /q dist && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && fixup.bat",
     "test": "node test.js"
   },
