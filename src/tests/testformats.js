@@ -349,6 +349,27 @@ const otherFormats = [
     verbatimLongitude: 'E 23.23.23',
     decimalLatitude: -27.759444,
     decimalLongitude: 23.38972222
+  },
+  {
+    verbatimCoordinates: '53 16.3863,4 52.8171',
+    verbatimLatitude: '53 16.3863', 
+    verbatimLongitude: '4 52.8171',
+    decimalLatitude: 53.273105,
+    decimalLongitude: 4.88029
+  },
+  {
+    verbatimCoordinates: '50 8.2914,-5 2.4447',
+    verbatimLatitude: '50 8.2914', 
+    verbatimLongitude: '-5 2.4447',
+    decimalLatitude: 50.13819,
+    decimalLongitude: -5.040745
+  },
+  {
+    verbatimCoordinates: `N 48° 30,6410', E 18° 57,4583'`,
+    verbatimLatitude: `N 48° 30,6410'`, 
+    verbatimLongitude: `E 18° 57,4583'`,
+    decimalLatitude: 48.51068,
+    decimalLongitude: 18.95764
   }
 ]
 

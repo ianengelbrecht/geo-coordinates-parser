@@ -1,7 +1,7 @@
 //function for converting coordinates from a string to decimal and verbatim
 //this is just a comment
 
-import { dd_re, dms_periods, dms_abbr, coords_other } from './regex.js'
+import { dm_numbers, dd_re, dms_periods, dms_abbr, coords_other } from './regex.js'
 
 import toCoordinateFormat from './toCoordinateFormat.js'
 
@@ -27,7 +27,28 @@ function converter(coordsString, decimalPlaces) {
   let match = [];	
   let matchSuccess = false;
 
-  if (dd_re.test(coordsString)){
+  if (dm_numbers.test(coordsString)) {
+    match = dm_numbers.exec(coordsString)
+    matchSuccess = checkMatch(match)
+    if (matchSuccess){
+
+      ddLat = Math.abs(match[1]) + match[2]/60
+      if (Number(match[1]) < 0) {
+        ddLat *= -1
+      }
+
+      ddLng = Math.abs(match[3]) + match[4]/60
+      if(Number(match[3]) < 0) {
+        ddLng *= -1
+      }
+
+    }
+    else {
+      throw new Error("invalid coordinate format")		
+    }
+  }
+
+  else if (dd_re.test(coordsString)){
     match = dd_re.exec(coordsString);
     matchSuccess = checkMatch(match);
     if (matchSuccess){
@@ -169,11 +190,12 @@ function converter(coordsString, decimalPlaces) {
     if (matchSuccess) {
       ddLat = Math.abs(parseInt(match[2]));
       if (match[4]){
-        ddLat += match[4]/60;
+        
+        ddLat += match[4].replace(',', '.')/60;
       }
 
       if (match[6]) {
-        ddLat += match[6]/3600;
+        ddLat += match[6].replace(',', '.')/3600;
       }
 
       if (parseInt(match[2]) < 0) {
@@ -182,11 +204,11 @@ function converter(coordsString, decimalPlaces) {
         
       ddLng = Math.abs(parseInt(match[10]));
       if (match[12]) {
-        ddLng += match[12]/60;
+        ddLng += match[12].replace(',', '.')/60;
       }
 
       if (match[14]) {
-        ddLng += match[14]/3600;
+        ddLng += match[14].replace(',', '.')/3600;
       }
 
       if (parseInt(match[10]) < 0) {

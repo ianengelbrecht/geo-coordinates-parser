@@ -1,5 +1,5 @@
 import convert from '../converter.js'
-import testFormats from '../testformats.js'
+import testFormats from './testformats.js'
 import failingFormats from './failFormats.js'
 
 let allPassed = true;

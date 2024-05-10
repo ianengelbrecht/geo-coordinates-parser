@@ -72,6 +72,9 @@ Formats used for testing can be be accessed with:
 convert.formats
 ```
 
+**Please note that decimal precision needs to be reasonable. The maximum decimal places allowed in DMS, for example, is three (3). DMS coordinates with four decimal places in seconds are measuring position at a precision of less than 
+10mm, which is way beyond what even the best professional GPS devices can provide.**
+
 **Please add coordinate formats that throw an error in the Github Issues.**
 
 **CAUTION!!!**
