@@ -2,7 +2,8 @@
 //borrowed from https://www.codegrepper.com/code-examples/javascript/javascript+converting+latitude+longitude+to+gps+coordinates
 
 /**
- * Converts decimalCoordinates to other formats commonly used
+ * Converts decimalCoordinates to commonly used string formats 
+ * Note that this will add degree and direction symbols to decimal coordinates
  * @param {string} format Either DMS or DM
  * @returns {string}
  */
@@ -12,49 +13,56 @@ function toCoordinateFormat(format) {
 
   if(this.decimalCoordinates && this.decimalCoordinates.trim()) {
 
-    if(format == 'DD'){
-      return this.decimalCoordinates
-    }
-
     const parts = this.decimalCoordinates.split(',').map(x => Number(x.trim()))
-    let convertedLat = convert(parts[0], format, true)
-    let convertedLong = convert(parts[1], format, false)
+    const decimalLatitude = Number(parts[0])
+    const decimalLongitude = Number(parts[1])
+    const absoluteLatitude = Math.abs(decimalLatitude)
+    const absoluteLongitude = Math.abs(decimalLongitude)
+    const latDir = decimalLatitude > 0 ? "N" : "S"
+    const longDir = decimalLongitude > 0 ? "E" : "W"
 
-    //some custom cleaning for DMS
-    if (convertedLat.endsWith('.0"') && convertedLong.endsWith('.0"')){
-      convertedLat = convertedLat.replace(/\.0"$/, '"')
-      convertedLong = convertedLong.replace(/\.0"$/, '"')
+    let result
+
+    if(format == 'DD'){
+      result = `${absoluteLatitude}° ${latDir}, ${absoluteLongitude}° ${longDir}`
     }
 
-    const latDirection = parts[0] >= 0 ? " N" : " S";
-    const longDirection = parts[1] >= 0 ? " E" : " W";
+    //else we need some more things
 
-    return `${convertedLat + latDirection}, ${convertedLong + longDirection}`
+    const degreesLatitude = Math.floor(absoluteLatitude);
+    const degreesLongitude = Math.floor(absoluteLongitude)
+    const minutesLatitudeNotTruncated = (absoluteLatitude - degreesLatitude) * 60;
+    const minutesLongitudeNotTruncated = (absoluteLongitude - degreesLongitude) * 60
+
+    if (format == 'DM') {
+      const dmMinsLatitude = round(minutesLatitudeNotTruncated, 3).toFixed(3).padStart(6, '0')
+      const dmMinsLongitude = round(minutesLongitudeNotTruncated, 3).toFixed(3).padStart(6, '0')
+      result = `${degreesLatitude}° ${dmMinsLatitude}' ${latDir}, ${degreesLongitude}° ${dmMinsLongitude}' ${longDir}`
+    }
+
+    if (format == "DMS") {
+      const latMinutes = Math.floor(minutesLatitudeNotTruncated)
+      const longMinutes = Math.floor(minutesLongitudeNotTruncated)
+      let latSeconds = ((minutesLatitudeNotTruncated - latMinutes) * 60).toFixed(1).padStart(4, '0');
+      let longSeconds = ((minutesLongitudeNotTruncated - longMinutes) * 60).toFixed(1).padStart(4, '0');
+      const latMinutesString = latMinutes.toString().padStart(2, '0')
+      const longMinutesString = longMinutes.toString().padStart(2, '0')
+
+      // if they both end in .0 we drop the .0
+      if (latSeconds.endsWith('.0"') && longSeconds.endsWith('.0"')){
+        latSeconds = latSeconds.replace(/\.0"$/, '"')
+        longSeconds = longSeconds.replace(/\.0"$/, '"')
+      }
+
+      result = `${degreesLatitude}° ${latMinutesString}' ${latSeconds}" ${latDir}, ${degreesLongitude}° ${longMinutesString}' ${longSeconds}" ${longDir}`;
+    }
+
+    return result
+
   }
   else {
     throw new Error('no decimal coordinates to convert')
   }
-}
-
-//assumes everything is valid...
-function convert(coord, format) {
-
-  const absolute = Math.abs(coord);
-
-  const degrees = Math.floor(absolute);
-  const minutesNotTruncated = (absolute - degrees) * 60;
-
-  if(format == 'DM') {
-    let dmMins = round(minutesNotTruncated, 3).toFixed(3).padStart(6, '0')
-    return `${degrees}° ${dmMins}'`;
-  }
-
-  //else
-  let minutes = Math.floor(minutesNotTruncated)
-  let seconds = ((minutesNotTruncated - minutes) * 60).toFixed(1).padStart(4, '0');
-  minutes = minutes.toString().padStart(2, '0')
-
-  return `${degrees}° ${minutes}' ${seconds}"`;
 }
 
 function round(num, places) {

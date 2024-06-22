@@ -266,6 +266,27 @@
     "decimalLongitude": 22.75
   },
   {
+    "verbatimCoordinates": "10.432342S 10.6345345E",
+    "verbatimLatitude": "10.432342S",
+    "verbatimLongitude": "10.6345345E",
+    "decimalLatitude": -10.432342,
+    "decimalLongitude": 10.6345345
+  },
+  {
+    "verbatimCoordinates": "10.00S 10.00E",
+    "verbatimLatitude": "10.00S",
+    "verbatimLongitude": "10.00E",
+    "decimalLatitude": -10,
+    "decimalLongitude": 10
+  },
+  {
+    "verbatimCoordinates": "00.00S 01.00E",
+    "verbatimLatitude": "00.00S",
+    "verbatimLongitude": "01.00E",
+    "decimalLatitude": 0,
+    "decimalLongitude": 1
+  },
+  {
     "verbatimCoordinates": "18.24S 22.45E",
     "verbatimLatitude": "18.24S",
     "verbatimLongitude": "22.45E",
@@ -348,5 +369,26 @@
     "verbatimLongitude": "E 23.23.23",
     "decimalLatitude": -27.759444,
     "decimalLongitude": 23.38972222
+  },
+  {
+    "verbatimCoordinates": "53 16.3863,4 52.8171",
+    "verbatimLatitude": "53 16.3863",
+    "verbatimLongitude": "4 52.8171",
+    "decimalLatitude": 53.273105,
+    "decimalLongitude": 4.88029
+  },
+  {
+    "verbatimCoordinates": "50 8.2914,-5 2.4447",
+    "verbatimLatitude": "50 8.2914",
+    "verbatimLongitude": "-5 2.4447",
+    "decimalLatitude": 50.13819,
+    "decimalLongitude": -5.040745
+  },
+  {
+    "verbatimCoordinates": "N 48° 30,6410', E 18° 57,4583'",
+    "verbatimLatitude": "N 48° 30,6410'",
+    "verbatimLongitude": "E 18° 57,4583'",
+    "decimalLatitude": 48.51068,
+    "decimalLongitude": 18.95764
   }
 ]

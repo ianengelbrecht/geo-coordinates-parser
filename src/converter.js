@@ -30,6 +30,7 @@ function converter(coordsString, decimalPlaces) {
   if (dm_numbers.test(coordsString)) {
     match = dm_numbers.exec(coordsString)
     matchSuccess = checkMatch(match)
+    
     if (matchSuccess){
 
       ddLat = Math.abs(match[1]) + match[2]/60
@@ -168,7 +169,8 @@ function converter(coordsString, decimalPlaces) {
       if (parseInt(match[10]) < 0) {
         ddLng = -1 * ddLng;
       }
-        
+      
+      //the compass directions
       if(match[1]) {
         latdir = match[1];
         lngdir = match[9];
@@ -214,7 +216,8 @@ function converter(coordsString, decimalPlaces) {
       if (parseInt(match[10]) < 0) {
         ddLng = -1 * ddLng;
       }
-        
+      
+      //the compass directions
       if(match[1]) {
         latdir = match[1];
         lngdir = match[9];
@@ -244,8 +247,8 @@ function converter(coordsString, decimalPlaces) {
       }
 
     //if we have one direction we must have the other
-    if((latdir || lngdir) && (!latdir || !lngdir)) {
-      throw new Error("invalid coordinates format")	
+    if((latdir && !lngdir) || (!latdir && lngdir)) {
+      throw new Error("invalid coordinates value")	
     }
 
     //the directions can't be the same
@@ -339,25 +342,22 @@ function converter(coordsString, decimalPlaces) {
     }
 
     //no integer coords allowed
-    //validation -- no integer coords
     if(/^\d+$/.test(verbatimLat) || /^\d+$/.test(verbatimLng)) {
       throw new Error('degree only coordinate/s provided')
     }
     
-
-    //some tidying up...
+    // last bit of tidying up...
     if(isNaN(ddLat) && ddLat.includes(',')) {
       ddLat = ddLat.replace(',', '.')
     }
-
-    //all done!!
-    //just truncate the decimals appropriately
-    ddLat = Number(Number(ddLat).toFixed(decimalPlaces))
 
     if(isNaN(ddLng) && ddLng.includes(',')) {
       ddLng = ddLng.replace(',', '.')
     }
 
+    //all done!!
+    //just truncate the decimals appropriately
+    ddLat = Number(Number(ddLat).toFixed(decimalPlaces))
     ddLng = Number(Number(ddLng).toFixed(decimalPlaces))
 
     return Object.freeze({
@@ -374,7 +374,6 @@ function converter(coordsString, decimalPlaces) {
   else {
     throw new Error("coordinates pattern match failed")
   }
-
 }
 
 function checkMatch(match) { //test if the matched groups arrays are 'balanced'. match is the resulting array
@@ -389,23 +388,25 @@ function checkMatch(match) { //test if the matched groups arrays are 'balanced'.
   //we need to shift the array because it contains the whole coordinates string in the first item
   filteredMatch.shift();
   
-  //check the array length is an even number else exit
+  //check the array length is an even number
   if (filteredMatch.length % 2 > 0) {
     return false;
   }
 
-  //regex for testing corresponding values match
+  // regex for testing corresponding values match
   const numerictest = /^[-+]?\d+([\.,]\d+)?$/; //for testing numeric values
   const stringtest = /[eastsouthnorthwest]+/i; //for testing string values (north, south, etc)
   
   
   const halflen = filteredMatch.length/2;
+
   for (let i = 0; i < halflen; i++) {
     const leftside = filteredMatch[i]
     const rightside = filteredMatch[i + halflen]
     const bothAreNumbers = numerictest.test(leftside) && numerictest.test(rightside)
     const bothAreStrings = stringtest.test(leftside) && stringtest.test(rightside)
     const valuesAreEqual = leftside == rightside
+    
     if (leftside == undefined && rightside == undefined) { //we have to handle undefined because regex converts it to string 'undefined'!!
       continue
     }
@@ -425,8 +426,8 @@ function checkMatch(match) { //test if the matched groups arrays are 'balanced'.
 }
 
 //functions for coordinate validation
-
 //as decimal arithmetic is not straightforward, we approximate
+
 function decimalsCloseEnough(dec1, dec2){
   const originaldiff = Math.abs(dec1 - dec2)
   const diff = Number(originaldiff.toFixed(6))
@@ -453,7 +454,7 @@ function coordsCloseEnough(coordsToTest) {
   }
 }
 
-
+// An enum for coordinates formats
 const to = Object.freeze({
   DMS: 'DMS',
   DM: 'DM',

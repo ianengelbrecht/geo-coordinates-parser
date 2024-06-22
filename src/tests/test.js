@@ -1,3 +1,6 @@
+// when adding new formats, make sure to add them to testformats.js, and not to testFormats.json
+// use makeTestFormatsJSON.js to make testFormats.json
+
 import convert from '../converter.js'
 import testFormats from './testformats.js'
 import failingFormats from './failFormats.js'

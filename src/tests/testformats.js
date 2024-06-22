@@ -1,6 +1,5 @@
 //return an array of coordinate strings for testing
 
-
 //coordinations-parser formats
 //https://www.npmjs.com/package/coordinate-parser
 const coordsParserFormats = [
@@ -242,8 +241,8 @@ const coordsRegexFormats = [
   } 
 ]
 
+// additional formats we've encountered
 const otherFormats = [
-  // additional formats we've encountered
   {
     verbatimCoordinates: '10.432342S 10.6345345E', //this is read as degrees and minutes
     verbatimLatitude: '10.432342S', 
@@ -372,8 +371,6 @@ const otherFormats = [
     decimalLongitude: 18.95764
   }
 ]
-
-
 
 function getAllTestFormats() {
   const arr1 = []

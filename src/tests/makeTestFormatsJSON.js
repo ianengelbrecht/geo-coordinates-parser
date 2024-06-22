@@ -6,6 +6,5 @@ fs.writeFile("testFormats.json", JSON.stringify(testFormats, null, 2), 'utf8', f
   console.log("An error occured while writing JSON Object to File.");
       return console.log(err);
   }
-
   console.log("JSON file has been saved.");
 });
