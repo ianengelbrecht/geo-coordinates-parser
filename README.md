@@ -46,6 +46,8 @@ converted.decimalLatitude; // 40.446195 ✓
 converted.decimalLongitude; // -79.948862 ✓
 converted.verbatimLatitude; // '40° 26.7717' ✓
 converted.verbatimLongitude; // '-79° 56.93172' ✓
+converted.decimalCoordinates; // for convenience
+convert.originalFormat; // 'DM' to indicate degrees and minutes
 ```
 The returned object includes properties verbatimCoordinates, verbatimLatitude, verbatimLongitude, decimalLatitude, decimalLatitude, and decimalCoordinates.
 

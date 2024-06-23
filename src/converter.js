@@ -24,6 +24,7 @@ function converter(coordsString, decimalPlaces) {
   let ddLng = null; 
   let latdir = "";
   let lngdir = "";
+  let originalFormat = null
   let match = [];	
   let matchSuccess = false;
 
@@ -42,6 +43,8 @@ function converter(coordsString, decimalPlaces) {
       if(Number(match[3]) < 0) {
         ddLng *= -1
       }
+
+      originalFormat = "DM"
 
     }
     else {
@@ -63,6 +66,8 @@ function converter(coordsString, decimalPlaces) {
       if(ddLng.includes(',')) {
         ddLng = ddLng.replace(',', '.');
       }
+
+      originalFormat = "DD"
 
       //validation, we don't want things like 23.00000
 
@@ -100,10 +105,12 @@ function converter(coordsString, decimalPlaces) {
 
       if (match[4]) {
         ddLat += match[4]/60;
+        originalFormat = "DM"
       }
         
       if (match[6]){
         ddLat += match[6].replace(',', '.')/3600;
+        originalFormat = "DMS"
       }
   
       if (parseInt(match[2]) < 0) {
@@ -146,10 +153,12 @@ function converter(coordsString, decimalPlaces) {
       ddLat = Math.abs(parseInt(match[2]));
       if (match[4]) {
         ddLat += match[4]/60;
+        originalFormat = "DM"
       }
 
       if (match[6]) {
         ddLat += match[6]/3600;
+        originalFormat = "DMS"
       }
 
       if (parseInt(match[2]) < 0) {
@@ -192,12 +201,13 @@ function converter(coordsString, decimalPlaces) {
     if (matchSuccess) {
       ddLat = Math.abs(parseInt(match[2]));
       if (match[4]){
-        
         ddLat += match[4].replace(',', '.')/60;
+        originalFormat = "DM"
       }
 
       if (match[6]) {
         ddLat += match[6].replace(',', '.')/3600;
+        originalFormat = "DMS"
       }
 
       if (parseInt(match[2]) < 0) {
@@ -254,6 +264,15 @@ function converter(coordsString, decimalPlaces) {
     //the directions can't be the same
     if(latdir && latdir == lngdir) {
       throw new Error("invalid coordinates format")	
+    }
+
+    // a bit of tidying up...
+    if (ddLat.toString().includes(',')) {
+      ddLat = ddLat.replace(',', '.')
+    }
+
+    if(ddLng.toString().includes(',')) {
+      ddLng = ddLng.replace(',', '.')
     }
 
     //make sure the signs and cardinal directions match
@@ -345,15 +364,6 @@ function converter(coordsString, decimalPlaces) {
     if(/^\d+$/.test(verbatimLat) || /^\d+$/.test(verbatimLng)) {
       throw new Error('degree only coordinate/s provided')
     }
-    
-    // last bit of tidying up...
-    if(isNaN(ddLat) && ddLat.includes(',')) {
-      ddLat = ddLat.replace(',', '.')
-    }
-
-    if(isNaN(ddLng) && ddLng.includes(',')) {
-      ddLng = ddLng.replace(',', '.')
-    }
 
     //all done!!
     //just truncate the decimals appropriately
@@ -367,6 +377,7 @@ function converter(coordsString, decimalPlaces) {
       decimalLatitude:  ddLat,
       decimalLongitude: ddLng,
       decimalCoordinates: `${ddLat},${ddLng}`,
+      originalFormat,
       closeEnough: coordsCloseEnough,
       toCoordinateFormat
     })

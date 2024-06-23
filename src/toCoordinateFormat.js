@@ -31,12 +31,18 @@ function toCoordinateFormat(format) {
 
     const degreesLatitude = Math.floor(absoluteLatitude);
     const degreesLongitude = Math.floor(absoluteLongitude)
-    const minutesLatitudeNotTruncated = (absoluteLatitude - degreesLatitude) * 60;
+    const minutesLatitudeNotTruncated = (absoluteLatitude - degreesLatitude) * 60
     const minutesLongitudeNotTruncated = (absoluteLongitude - degreesLongitude) * 60
 
     if (format == 'DM') {
-      const dmMinsLatitude = round(minutesLatitudeNotTruncated, 3).toFixed(3).padStart(6, '0')
-      const dmMinsLongitude = round(minutesLongitudeNotTruncated, 3).toFixed(3).padStart(6, '0')
+      let dmMinsLatitude = round(minutesLatitudeNotTruncated, 3).toFixed(3).padStart(6, '0')
+      let dmMinsLongitude = round(minutesLongitudeNotTruncated, 3).toFixed(3).padStart(6, '0')
+      
+      if (dmMinsLatitude.endsWith('.000') && dmMinsLongitude.endsWith('.000')) {
+        dmMinsLatitude = dmMinsLatitude.replace(/\.000$/, '')
+        dmMinsLongitude = dmMinsLongitude.replace(/\.000$/, '')
+      }
+      
       result = `${degreesLatitude}° ${dmMinsLatitude}' ${latDir}, ${degreesLongitude}° ${dmMinsLongitude}' ${longDir}`
     }
 
@@ -49,9 +55,9 @@ function toCoordinateFormat(format) {
       const longMinutesString = longMinutes.toString().padStart(2, '0')
 
       // if they both end in .0 we drop the .0
-      if (latSeconds.endsWith('.0"') && longSeconds.endsWith('.0"')){
-        latSeconds = latSeconds.replace(/\.0"$/, '"')
-        longSeconds = longSeconds.replace(/\.0"$/, '"')
+      if (latSeconds.endsWith('.0') && longSeconds.endsWith('.0')){
+        latSeconds = latSeconds.replace(/\.0$/, '')
+        longSeconds = longSeconds.replace(/\.0$/, '')
       }
 
       result = `${degreesLatitude}° ${latMinutesString}' ${latSeconds}" ${latDir}, ${degreesLongitude}° ${longMinutesString}' ${longSeconds}" ${longDir}`;
