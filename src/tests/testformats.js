@@ -369,6 +369,13 @@ const otherFormats = [
     verbatimLongitude: `E 18° 57,4583'`,
     decimalLatitude: 48.51068,
     decimalLongitude: 18.95764
+  },
+  {
+    verbatimCoordinates: `1.23456, 18.33453`,
+    verbatimLatitude: `1.23456`, 
+    verbatimLongitude: `18.33453`,
+    decimalLatitude: 1.23456,
+    decimalLongitude: 18.33453
   }
 ]
 

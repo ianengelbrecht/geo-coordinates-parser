@@ -20,7 +20,10 @@ const failingFormats = [
   'S 90°4\'17.698" S 23°4\'17.698"',
   '27.45.34 S S 23.23.23', //invalid direction on right side
   '27.45.34  23.23.23 E', //no dir on one side
-  '8°83S 35°67E '
+  '8°83S 35°67E ', // BOTH minutes are above 59, which matches other_coords and goes through...
+  '25.62S, 27.77E', // BOTH minutes are above 59, which matches other_coords and goes through...
+  '-254.4602, 31.53681',
+  '1234.524234234, 1241.1541241234',
 ]
 
 export default failingFormats

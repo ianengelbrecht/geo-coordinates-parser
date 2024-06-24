@@ -1,7 +1,7 @@
 //function for converting coordinates from a string to decimal and verbatim
 //this is just a comment
 
-import { dm_numbers, dd_re, dms_periods, dms_abbr, coords_other } from './regex.js'
+import { dm_invalid, dm_numbers, dd_re, dms_periods, dms_abbr, coords_other } from './regex.js'
 
 import toCoordinateFormat from './toCoordinateFormat.js'
 
@@ -27,6 +27,10 @@ function converter(coordsString, decimalPlaces) {
   let originalFormat = null
   let match = [];	
   let matchSuccess = false;
+
+  if (dm_invalid.test(coordsString)) {
+    throw new Error("invalid coordinate value")		
+  }
 
   if (dm_numbers.test(coordsString)) {
     match = dm_numbers.exec(coordsString)
@@ -197,6 +201,11 @@ function converter(coordsString, decimalPlaces) {
   else if (coords_other.test(coordsString)) {
     match = coords_other.exec(coordsString);
     matchSuccess = checkMatch(match);
+
+    // we need an extra check here for things that matched that shouldn't have
+    if (match.filter(x => x).length <= 5) {
+      throw new Error("invalid coordinates format")	
+    }
 
     if (matchSuccess) {
       ddLat = Math.abs(parseInt(match[2]));
@@ -451,6 +460,11 @@ function decimalsCloseEnough(dec1, dec2){
 }
 
 function coordsCloseEnough(coordsToTest) {
+  
+  if (!coordsToTest) {
+    throw new Error('coords must be provided')
+  }
+
   if (coordsToTest.includes(',')){
     const coords = coordsToTest.split(',')
     if(Number(coords[0]) == NaN || Number(coords[1]) == NaN) {
