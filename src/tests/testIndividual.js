@@ -6,8 +6,9 @@ import convert from '../converter.js'
 //const test = `8°83S 35°67E`
 //const test = `N 48° 30,6410', E 18° 57,4583'`
 //const test = '-254.4602, 31.53681'
-const test = '25.62S, 27.77E'
-//const correctDecimals = '-25.533333, 27.283333'
+//const test = '25.62S, 27.77E'
+const test = '26°44S 29°46E'
+const correctDecimals = '-26.73333, 29.76666'
 
 let converted
 try {
